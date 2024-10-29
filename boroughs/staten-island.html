@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Staten Island Health Map</title>
+    <!-- Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <!-- Leaflet JavaScript -->
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <!-- Leaflet pop-up plugin for responsive pop-ups -->
+    <script src="https://unpkg.com/leaflet-responsive-popup@1.0.0/leaflet.responsive.popup.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet-responsive-popup@1.0.0/leaflet.responsive.popup.css"
+    />
+    <!-- D3.js -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Highcharts -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <!-- CSS files -->
+    <link rel="stylesheet" href="map.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <h1>Staten Island Health Map</h1>
+      <nav>
+        <ul>
+          <li><a href="../index.html">New York City</a></li>
+          <li><a href="brooklyn.html">Brooklyn</a></li>
+          <li><a href="queens.html">Queens</a></li>
+          <li><a href="bronx.html">Bronx</a></li>
+          <li><a href="manhattan.html">Manhattan</a></li>
+        </ul>
+      </nav>
+    </header>
+    <!-- Map container for everything -->
+    <div id="map-layout">
+      <!-- Container just the map and select buttons -->
+      <div id="map-section">
+        <!-- Container for map selection buttons -->
+        <div id="map-btn-container">
+          <button id="btnDemographicLanguageMap" class="mapSelectBtn">
+            Demographics
+          </button>
+          <button id="btnHealthRiskBehaviorsMap" class="mapSelectBtn">
+            Health Risk Behaviors
+          </button>
+          <button id="btnHealthOutcomesMap" class="mapSelectBtn">
+            Health Outcomes
+          </button>
+          <button id="btnScreeningRatesMap" class="mapSelectBtn">
+            Screening Rates
+          </button>
+          <button id="btnHealthStatusMap" class="mapSelectBtn">
+            Health Status
+          </button>
+        </div>
+        <!-- Container for maps -->
+        <div id="map-container">
+          <div id="demographicLanguageMap" class="map"></div>
+          <div id="healthRiskBehaviorsMap" class="map"></div>
+          <div id="healthOutcomesMap" class="map"></div>
+          <div id="screeningRatesMap" class="map"></div>
+          <div id="healthStatusMap" class="map"></div>
+        </div>
+      </div>
+      <!-- Container for zip code -->
+      <div id="zip-code-container">
+        <div id="zip-code-header">
+          <div id="zip-code-header-text">ZIP CODE LEVEL DATA</div>
+
+          <!-- Zip code dropdown -->
+          <select id="zip-code-dropdown">
+            <option>Select a Zip Code</option>
+          </select>
+        </div>
+
+        <div id="zip-code-content">
+          <h3 style="text-align: center">
+            Welcome to the Staten Island Health Map!
+          </h3>
+          <br />
+          <p>
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> To the left, you
+            will find a map of Staten Island showing various health and
+            demographic data on the census tract level. There is also a "Zip
+            Code Boundaries" layer, which you can use to orient yourself with
+            the different areas of Staten Island.
+          </p>
+          <ul>
+            <li>Click each tract to find relevant data about block groups</li>
+            <br />
+            <li>
+              Toggle the "Zip Code Boundaries" layer to find population data on
+              the zip code level and to see where census tracts fall and are
+              divided
+            </li>
+            <br />
+            <li>
+              Zoom in to see street names and road level details on the map and
+              to see which streets and blocks fall within each tract
+            </li>
+          </ul>
+          <br />
+          <p>
+            <i class="fa fa-arrow-up" aria-hidden="true"></i> To view a summary
+            of health data across all categories, click the
+            <i>"Select a Zip Code"</i> dropdown button above and select a zip
+            code.
+          </p>
+          <br />
+          <p>
+            <i class="fa fa-arrow-down" aria-hidden="true"></i> Finally, check
+            out the charts below to see an overview of the health statistics on
+            a neighborhood level (neighborhoods defined as
+            <a
+              href="https://en.wikipedia.org/wiki/Category:Neighborhoods_in_New_York_City"
+              style="color: #008080"
+              target="_blank"
+              >geographical neighborhoods</a
+            >)
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- Highcharts Section -->
+    <section id="highCharts-section">
+      <div id="hc-btns">
+        <button id="hc-risk-btn">Health Risk Behaviors</button>
+        <button id="hc-outcomes-btn">Health Outcomes</button>
+        <button id="hc-screens-btn">Screening Rates</button>
+        <button id="hc-status-btn">Health Status</button>
+        <button id="hc-disability-btn">Disabilities</button>
+      </div>
+
+      <div id="chart-behavior" class="high-charts-container"></div>
+      <div id="chart-health" class="high-charts-container"></div>
+      <div id="chart-screening" class="high-charts-container"></div>
+      <div id="chart-status" class="high-charts-container"></div>
+      <div id="chart-disable" class="high-charts-container"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <span>&copy; 2024</span>
+      <p id="about-link">About</p>
+    </footer>
+
+    <!-- Overlay to darken the page -->
+    <div id="overlay"></div>
+
+    <!-- About Popup -->
+    <div id="about-popup">
+      <span class="close-btn">&times;</span>
+      <p>
+        The data are derived from the 2020 PLACES: Local Data for Better Health
+        project, New York State Cancer Registry, and the American Community
+        Survey 2014-2018 - Language Spoken at Home 5-year estimates.
+      </p>
+      <br />
+      <br />
+      <p>
+        Zip code level language statistics are estimates calculated using the
+        HUD-USPS 'ZIP-TRACT' ZIP Code Crosswalk files from the first quarter of
+        2021. As a result, the uncertainty of estimates of the aggregate
+        language data is higher at the zip code level, than at the tract level
+        (95% CI).
+      </p>
+      <br />
+      <br />
+      <p>
+        Shapefiles for zip code areas, Neighborhood Tabulation Areas (NTAs), and
+        Public Use Microdata Areas (PUMAs) were collected from the New York City
+        Open Data Portal.
+      </p>
+      <br />
+      <br />
+      <p>
+        For questions, comments, or suggestions about this resource, contact
+        Sheena Philogene.
+      </p>
+      <br />
+      <br />
+      <div class="credits">
+        <p>
+          Developed by:
+          <a
+            href="https://www.linkedin.com/in/wilson-liu-780255237/"
+            target="_blank"
+            class="linkedin-link"
+          >
+            Wilson Liu
+          </a>
+        </p>
+        <p>
+          This work is licensed under a Creative Commons Attribution 4.0
+          International License.
+        </p>
+      </div>
+    </div>
+    <!-- Script files-->
+    <script>
+      //=========================================================== CONFIGURATION =================================================================
+      const BORO_NAME = "Staten Island";
+      const COUNTY_NAME = "Richmond";
+
+      // MAP BOUNDS - set bounds so the map has limits for visibility
+      var southWest = L.latLng(40.5, -74.255641),
+        northEast = L.latLng(40.651381, -74.049713),
+        bounds = L.latLngBounds(southWest, northEast);
+      const INITIAL_ZOOM_LEVEL = 12;
+      const ZOOM_INCREMENT = 0.5;
+
+      // Staten Island Language Breaks
+      const arabicBreaks = [0, 30, 97, 165, 234, 344, 616];
+      const chineseBreaks = [0, 57, 143, 279, 467, 726, 1562];
+      const frenchBreaks = [0, 12, 35, 69, 106, 184, 395];
+      const germanBreaks = [0, 7, 35, 76, 153, 213, 524];
+      const koreanBreaks = [0, 9, 21, 47, 70, 119, 380];
+      const otherBreaks = [0, 12, 47, 99, 195, 271, 788];
+      const otherAsiaBreaks = [0, 19, 58, 115, 184, 255, 458];
+      const otherIndoBreaks = [0, 103, 219, 319, 462, 630, 822];
+      const russianBreaks = [0, 78, 203, 376, 594, 867, 1941];
+      const spanishBreaks = [0, 145, 326, 528, 787, 1177, 1752];
+      const tagalogBreaks = [0, 8, 23, 40, 62, 99, 147];
+      const vietnameseBreaks = [0, 1, 7, 11, 15, 21, 56];
+      const totalPopBreaks = [23, 1133, 2521, 3538, 4468, 5725, 7995];
+
+      // Staten Island Health Breaks
+      const lackOfHealthInsuranceBreaks = [
+        3.9, 5.6, 7.1, 8.3, 10.9, 14.1, 22.1,
+      ];
+      const bingeDrinkingBreaks = [10, 12.5, 13.8, 14.9, 15.8, 16.9, 23.5];
+      const currentSmokingBreaks = [11, 13.9, 15.7, 17.7, 20.3, 22.9, 32.5];
+      const physicalInactivityBreaks = [16, 22.1, 24.9, 28.1, 32.6, 37.4, 50.7];
+      const sleepLessThan7HoursBreaks = [
+        32.7, 34.8, 36.2, 38.1, 41, 44.1, 48.3,
+      ];
+      const currentAsthmaBreaks = [9.3, 9.9, 10.3, 10.9, 11.6, 12.2, 15.7];
+      const highBloodPressureBreaks = [
+        15.3, 22.1, 28.1, 30.6, 33.5, 37.2, 41.2,
+      ];
+      const cancerExceptSkinBreaks = [2.5, 4.3, 5.4, 6.5, 7.3, 7.9, 11.1];
+      const cholesterolScreeningBreaks = [
+        76.3, 79.9, 83.7, 85.6, 87.1, 88.6, 90.9,
+      ];
+      const chronicKidneyDiseaseBreaks = [1.2, 1.8, 2.5, 2.8, 3.2, 3.7, 4.5];
+      const arthritisBreaks = [10.3, 14.5, 21.1, 23.1, 24.5, 26.8, 32];
+      const coronaryHeartDiseaseBreaks = [1.5, 2.4, 4.3, 4.9, 5.7, 6.8, 9.1];
+      const diabetesBreaks = [4.1, 6.6, 10.2, 12.1, 14.2, 16.9, 22.9];
+      const obesityBreaks = [26.7, 30, 31.8, 34.3, 37.9, 41.9, 48.8];
+      const strokeBreaks = [0.9, 1.4, 2.4, 2.8, 3.4, 3.9, 5.3];
+      const annualCheckupBreaks = [70.3, 70.3, 75.4, 76.4, 77.2, 78.2, 81.3];
+      const dentalVisitBreaks = [33.4, 33.4, 46.5, 54.2, 60.6, 66.5, 73.2];
+      const mammographyUseBreaks = [75.8, 77, 77.7, 78.4, 79.3, 80.4, 81.7];
+      const cervicalCancerScreeningBreaks = [
+        80.8, 82.2, 84.3, 85.6, 86.6, 87.8, 89.7,
+      ];
+      const colorectalCancerScreeningBreaks = [
+        66.8, 67.8, 70.8, 72.6, 74.2, 76.1, 78.6,
+      ];
+      const depressionBreaks = [15.7, 16.3, 17.3, 18, 18.7, 19.4, 21.8];
+      const frequentMentalHealthDistressBreaks = [
+        11.9, 13.1, 14.2, 15.3, 16.8, 19.1, 24.5,
+      ];
+      const frequentPhysicalHealthDistressBreaks = [
+        5.8, 7.5, 9.4, 10.4, 11.8, 13.7, 19.6,
+      ];
+      const fairOrPoorHealthBreaks = [7.2, 12, 14.1, 16.4, 20.1, 23.6, 36.7];
+      const anyDisabilityBreaks = [16.1, 21.3, 24.1, 26.5, 30, 35.3, 49];
+      const hearingDisabilityBreaks = [2.2, 3.1, 4.6, 5.2, 6, 7.2, 9.2];
+      const visionDisabilityBreaks = [2.1, 3.4, 4.1, 5.2, 6.7, 9.1, 17.7];
+      const cognitiveDisabilityBreaks = [8.3, 10.3, 11.5, 13.6, 15.9, 18.9, 27];
+      const mobilityDisabilityBreaks = [4.1, 6.6, 10.5, 12.2, 14.2, 16.5, 27];
+      const selfCareDisabilityBreaks = [1.3, 2.6, 3.1, 3.8, 4.7, 6.1, 11.9];
+      const independentLivingDisabilityBreaks = [
+        4.3, 6, 6.9, 8.1, 9.7, 11.8, 21.6,
+      ];
+      const highCholesterolBreaks = [19.9, 19.9, 27.1, 31, 33.1, 35.2, 39];
+    </script>
+    <script src="../geojson-data/nyc-health-data.js"></script>
+    <script src="../geojson-data/nyc-language-demographic.js"></script>
+    <script src="../geojson-data/zip-code-boundaries.js"></script>
+    <script src="../geojson-data/zip-code-data.js"></script>
+    <script src="../geojson-data/neighborhood-summaries.js"></script>
+    <script src="mapHandler.js"></script>
+    <script src="chartHandler.js"></script>
+    <script src="map.js"></script>
+    <script src="zipCodeHandler.js"></script>
+    <script src="popupHandler.js"></script>
+  </body>
+</html>
