@@ -4978,30 +4978,25 @@ function getColorForIndependentLivingDisability(percent) {
 
 /* SYNCHRONIZE MAPS */
 
-
 maps["demographicLanguageMap"].sync(maps["healthRiskBehaviorsMap"]);
 maps["demographicLanguageMap"].sync(maps["healthOutcomesMap"]);
 maps["demographicLanguageMap"].sync(maps["screeningRatesMap"]);
 maps["demographicLanguageMap"].sync(maps["healthStatusMap"]);
-
 
 maps["healthRiskBehaviorsMap"].sync(maps["demographicLanguageMap"]);
 maps["healthRiskBehaviorsMap"].sync(maps["healthOutcomesMap"]);
 maps["healthRiskBehaviorsMap"].sync(maps["screeningRatesMap"]);
 maps["healthRiskBehaviorsMap"].sync(maps["healthStatusMap"]);
 
-
 maps["healthOutcomesMap"].sync(maps["demographicLanguageMap"]);
 maps["healthOutcomesMap"].sync(maps["healthRiskBehaviorsMap"]);
 maps["healthOutcomesMap"].sync(maps["screeningRatesMap"]);
 maps["healthOutcomesMap"].sync(maps["healthStatusMap"]);
 
-
 maps["screeningRatesMap"].sync(maps["demographicLanguageMap"]);
 maps["screeningRatesMap"].sync(maps["healthRiskBehaviorsMap"]);
 maps["screeningRatesMap"].sync(maps["healthOutcomesMap"]);
 maps["screeningRatesMap"].sync(maps["healthStatusMap"]);
-
 
 maps["healthStatusMap"].sync(maps["demographicLanguageMap"]);
 maps["healthStatusMap"].sync(maps["healthRiskBehaviorsMap"]);
