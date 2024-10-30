@@ -45,8 +45,7 @@ function combineZipData(geoData, summaries) {
   return geoData;
 }
 
-var zipCodeOverlay = ({
-// L.geoJson(combineZipData(zipCodeBoundaries, zipCodeData), {
+// var zipCodeOverlay = L.geoJson(combineZipData(zipCodeBoundaries, zipCodeData), {
 //   filter: function (feature) {
 //       return feature.properties.COUNTY == COUNTY_NAME;
 //     },
@@ -80,7 +79,7 @@ var zipCodeOverlay = ({
 //       return new L.CircleMarker([lat,lon]).bindTooltip(label, {permanent: true, opacity: 1, direction:'center'}).openTooltip().addTo(zipGroup);
 //   }
 //   }
-}).addTo(zipGroup)
+// }).addTo(zipGroup)
 
 var boundaries = {
     "See Zip Codes": zipGroup
