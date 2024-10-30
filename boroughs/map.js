@@ -45,41 +45,41 @@ function combineZipData(geoData, summaries) {
   return geoData;
 }
 
-// var zipCodeOverlay = L.geoJson(combineZipData(zipCodeBoundaries, zipCodeData), {
-//   filter: function (feature) {
-//       return feature.properties.COUNTY == COUNTY_NAME;
-//     },
+var zipCodeOverlay = L.geoJson(combineZipData(zipCodeBoundaries, zipCodeData), {
+  filter: function (feature) {
+      return feature.properties.COUNTY == COUNTY_NAME;
+    },
 
-//   style: {
-//   "color": "#ededed",
-//   "weight": 5,
-//   "opacity": 0.65
-// },
-//   onEachFeature: function(feature, layer) {
-//     //ADD POP UP
-//     layer.bindPopup('<h3> Zip code: ' + feature.properties.ZIPCODE + '<p>The estimated total population of people living in <strong>' + feature.properties.ZIPCODE + ' (' + feature.properties.Neighborhood + ') ' +
-//                 '</strong> is <strong>' + parseInt(feature.properties["2022 Total Population"]).toLocaleString("en-US") + '</strong>.</p><p style="font-size: 9px;">Data is from the 2020 PLACES: Local Data for Better Health project</p>');
-//     layer.on('mouseover', function() {
-//         layer.setStyle({
-//             fillOpacity: 0.8
-//         })
-//     })
-//     layer.on('mouseout', function() {
-//         layer.setStyle({
-//             fillOpacity: 0.2
-//         })
-//     });
-// // }).addTo(zipGroup)
-// //ADD LABELS
-//   if (feature.geometry.type === 'Polygon') {
-//       label = String(feature.properties.ZIPCODE)
-//       var centroid = turf.centroid(feature);
-//       var lon = centroid.geometry.coordinates[0];
-//       var lat = centroid.geometry.coordinates[1];
-//       return new L.CircleMarker([lat,lon]).bindTooltip(label, {permanent: true, opacity: 1, direction:'center'}).openTooltip().addTo(zipGroup);
-//   }
-//   }
+  style: {
+  "color": "#ededed",
+  "weight": 5,
+  "opacity": 0.65
+},
+  onEachFeature: function(feature, layer) {
+    //ADD POP UP
+    layer.bindPopup('<h3> Zip code: ' + feature.properties.ZIPCODE + '<p>The estimated total population of people living in <strong>' + feature.properties.ZIPCODE + ' (' + feature.properties.Neighborhood + ') ' +
+                '</strong> is <strong>' + parseInt(feature.properties["2022 Total Population"]).toLocaleString("en-US") + '</strong>.</p><p style="font-size: 9px;">Data is from the 2020 PLACES: Local Data for Better Health project</p>');
+    layer.on('mouseover', function() {
+        layer.setStyle({
+            fillOpacity: 0.8
+        })
+    })
+    layer.on('mouseout', function() {
+        layer.setStyle({
+            fillOpacity: 0.2
+        })
+    });
 // }).addTo(zipGroup)
+//ADD LABELS
+  if (feature.geometry.type === 'Polygon') {
+      label = String(feature.properties.ZIPCODE)
+      var centroid = turf.centroid(feature);
+      var lon = centroid.geometry.coordinates[0];
+      var lat = centroid.geometry.coordinates[1];
+      return new L.CircleMarker([lat,lon]).bindTooltip(label, {permanent: true, opacity: 1, direction:'center'}).openTooltip().addTo(zipGroup);
+  }
+  }
+}).addTo(zipGroup)
 
 var boundaries = {
     "See Zip Codes": zipGroup
