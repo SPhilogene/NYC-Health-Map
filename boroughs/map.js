@@ -5034,35 +5034,35 @@ window.addEventListener("load", () => {
     }), { once: true }
 }
 });
-document.getElementById("btnDemographicLanguageMap").onclick = function() {
-  synchronize = true;
-  while (synchronize) {
-    maps["demographicLanguageMap"].on('moveend',function(e) {
-      moveView = e.target.getCenter();
-      zoomView = e.target.getZoom();
-      console.log(moveView);
-      maps["healthRiskBehaviorsMap"].setView(([moveView.lat, moveView.lng]), zoomView);
-      maps["healthOutcomesMap"].setView(([moveView.lat, moveView.lng]), zoomView);
-      maps["screeningRatesMap"].setView(([moveView.lat, moveView.lng]), zoomView);
-      maps["healthStatusMap"].setView(([moveView.lat, moveView.lng]), zoomView);
-    }) 
-}
-};
-document.getElementById("btnHealthRiskBehaviorsMap").onclick = function() {
-  synchronize = true;
-  while (synchronize) {
-    maps["healthRiskBehaviorsMap"].on('moveend',function(e) {
-      moveView = e.target.getCenter();
-      zoomView = e.target.getZoom();
-      console.log(moveView); 
-      e.stopPropagation();
-      maps["demographicLanguageMap"].setView(([moveView.lat, moveView.lng]), zoomView);
-      maps["healthOutcomesMap"].setView(([moveView.lat, moveView.lng]), zoomView);
-      maps["screeningRatesMap"].setView(([moveView.lat, moveView.lng]), zoomView);
-      maps["healthStatusMap"].setView(([moveView.lat, moveView.lng]), zoomView);
-    })
-}
-};
+// document.getElementById("btnDemographicLanguageMap").onclick = function() {
+//   synchronize = true;
+//   while (synchronize) {
+//     maps["demographicLanguageMap"].on('moveend',function(e) {
+//       moveView = e.target.getCenter();
+//       zoomView = e.target.getZoom();
+//       console.log(moveView);
+//       maps["healthRiskBehaviorsMap"].setView(([moveView.lat, moveView.lng]), zoomView);
+//       maps["healthOutcomesMap"].setView(([moveView.lat, moveView.lng]), zoomView);
+//       maps["screeningRatesMap"].setView(([moveView.lat, moveView.lng]), zoomView);
+//       maps["healthStatusMap"].setView(([moveView.lat, moveView.lng]), zoomView);
+//     }) 
+// }
+// };
+// document.getElementById("btnHealthRiskBehaviorsMap").onclick = function() {
+//   synchronize = true;
+//   while (synchronize) {
+//     maps["healthRiskBehaviorsMap"].on('moveend',function(e) {
+//       moveView = e.target.getCenter();
+//       zoomView = e.target.getZoom();
+//       console.log(moveView); 
+//       e.stopPropagation();
+//       maps["demographicLanguageMap"].setView(([moveView.lat, moveView.lng]), zoomView);
+//       maps["healthOutcomesMap"].setView(([moveView.lat, moveView.lng]), zoomView);
+//       maps["screeningRatesMap"].setView(([moveView.lat, moveView.lng]), zoomView);
+//       maps["healthStatusMap"].setView(([moveView.lat, moveView.lng]), zoomView);
+//     })
+// }
+// };
 // document
 //   .getElementById("btnHealthOutcomesMap")
 //   .addEventListener("click", () => {
