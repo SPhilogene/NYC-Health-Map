@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manhattan Health Map</title>
+    <!-- Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <!-- Leaflet JavaScript -->
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <!-- Leaflet pop-up plugin for responsive pop-ups -->
+    <script src="https://unpkg.com/leaflet-responsive-popup@1.0.0/leaflet.responsive.popup.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet-responsive-popup@1.0.0/leaflet.responsive.popup.css"
+    />
+    <!-- D3.js -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Highcharts -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/modules/pattern-fill.js"></script>
+    <!-- CSS files -->
+    <link rel="stylesheet" href="map.css" defer/>
+    <!-- turf.js for centroids -->
+    <script src="https://unpkg.com/@turf/turf@3.5.2/turf.min.js"></script>
+    <!-- font-awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type='text/css'>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <h1>Manhattan Health Map</h1>
+      <nav>
+        <ul>
+          <li><a href="../index.html">New York City</a></li>
+          <li>
+            <a href="brooklyn.html" data-boro="Brooklyn" data-county="Kings"
+              >Brooklyn</a
+            >
+          </li>
+          <li><a href="queens.html">Queens</a></li>
+          <li><a href="bronx.html">Bronx</a></li>
+          <li><a href="staten-island.html">Staten Island</a></li>
+        </ul>
+      </nav>
+    </header>
+    <!-- Map container for everything -->
+    <div id="map-layout">
+      <!-- Container just the map and select buttons -->
+      <div id="map-section">
+        <!-- Container for map selection buttons -->
+        <div id="map-btn-container">
+          <button id="btnDemographicLanguageMap" class="mapSelectBtn">
+            Demographics
+          </button>
+          <button id="btnHealthRiskBehaviorsMap" class="mapSelectBtn">
+            Health Risk Behaviors
+          </button>
+          <button id="btnHealthOutcomesMap" class="mapSelectBtn">
+            Health Outcomes
+          </button>
+          <button id="btnScreeningRatesMap" class="mapSelectBtn">
+            Screening Rates
+          </button>
+          <button id="btnHealthStatusMap" class="mapSelectBtn">
+            Health Status
+          </button>
+        </div>
+        <!-- Container for maps -->
+        <div id="map-container">
+          <div id="mapObj" style="width:100%; height:100%"></div>
+        </div>
+      </div>
+      <!-- Container for zip code -->
+      <div id="zip-code-container">
+        <div id="zip-code-header">
+          <div id="zip-code-header-text">ZIP CODE LEVEL DATA</div>
+
+          <!-- Zip code dropdown -->
+          <select id="zip-code-dropdown">
+            <option>Select a Zip Code</option>
+          </select>
+        </div>
+
+        <div id="zip-code-content" style="font-size: 13px; overflow: auto;">
+          <p style="text-align: center; font-size: 1.75rem;">
+            Welcome to the Manhattan Health Map!
+          </p>
+          <br />
+          <p>
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> To the left, you
+            will find a map of Manhattan showing various health and demographic
+            data on the census tract level. There is also a "Zip Code
+            Boundaries" layer, which you can use to orient yourself with the
+            different areas of Manhattan.
+          </p>
+          <br>
+          <ul>
+            <li style="list-style-type: circle; margin: 0 0 0 40px; padding: 0 0 10px 0;">Click each tract to find relevant data about block groups</li>
+            <li style="list-style-type: circle; margin: 0 0 0 40px; padding: 0 0 10px 0;"> 
+              Toggle the "Zip Code Boundaries" layer to find population data on
+              the zip code level and to see where census tracts fall and are
+              divided
+            </li>
+            <li style="list-style-type: circle; margin: 0 0 0 40px; padding: 0 0 10px 0;">
+              Zoom in to see street names and road level details on the map and
+              to see which streets and blocks fall within each tract
+            </li>
+          </ul>
+          <p>
+            <i class="fa fa-arrow-up" aria-hidden="true"></i> To view a summary
+            of health data across all categories, click the
+            <i>"Select a Zip Code"</i> dropdown button above and select a zip
+            code.
+          </p>
+          <br />
+          <p>
+            <i class="fa fa-arrow-down" aria-hidden="true"></i> Finally, check
+            out the charts below to see an overview of the health statistics on
+            a neighborhood level (neighborhoods defined as
+            <a
+              href="https://en.wikipedia.org/wiki/Category:Neighborhoods_in_New_York_City"
+              style="color: #008080"
+              target="_blank"
+              >geographical neighborhoods</a
+            >)
+          </p>
+          </span>
+        </div>
+      </div>
+    </div>
+    <!-- Highcharts Section -->
+    <section id="highCharts-section">
+      <div id="hc-btns">
+        <button id="hc-risk-btn">Health Risk Behaviors</button>
+        <button id="hc-outcomes-btn">Health Outcomes</button>
+        <button id="hc-screens-btn">Screening Rates</button>
+        <button id="hc-status-btn">Health Status</button>
+        <button id="hc-disability-btn">Disabilities</button>
+      </div>
+
+      <div id="chart-behavior" class="high-charts-container"></div>
+      <div id="chart-health" class="high-charts-container"></div>
+      <div id="chart-screening" class="high-charts-container"></div>
+      <div id="chart-status" class="high-charts-container"></div>
+      <div id="chart-disable" class="high-charts-container"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <span>&copy; 2024</span>
+      <p id="about-link">About</p>
+    </footer>
+
+    <!-- Overlay to darken the page -->
+    <div id="overlay"></div>
+
+    <!-- About Popup -->
+    <div id="about-popup">
+      <span class="close-btn">&times;</span>
+      <p>
+        The data are derived from the 2020 PLACES: Local Data for Better Health
+        project, New York State Cancer Registry, and the American Community
+        Survey 2014-2018 - Language Spoken at Home 5-year estimates.
+      </p>
+      <br />
+      <br />
+      <p>
+        Zip code level language statistics are estimates calculated using the
+        HUD-USPS 'ZIP-TRACT' ZIP Code Crosswalk files from the first quarter of
+        2021. As a result, the uncertainty of estimates of the aggregate
+        language data is higher at the zip code level, than at the tract level
+        (95% CI).
+      </p>
+      <br />
+      <br />
+      <p>
+        Shapefiles for zip code areas, Neighborhood Tabulation Areas (NTAs), and
+        Public Use Microdata Areas (PUMAs) were collected from the New York City
+        Open Data Portal.
+      </p>
+      <br />
+      <br />
+      <p>
+        For questions, comments, or suggestions about this resource, contact
+        Sheena Philogene.
+      </p>
+      <br />
+      <br />
+      <div class="credits">
+        <p>
+          Developed by:
+          <a
+            href="https://www.linkedin.com/in/wilson-liu-780255237/"
+            target="_blank"
+            class="linkedin-link"
+          >
+            Wilson Liu
+          </a>
+        </p>
+        <p>
+          This work is licensed under a Creative Commons Attribution 4.0
+          International License.
+        </p>
+      </div>
+    </div>
+    <!-- Script files-->
+    <script>
+      //=========================================================== CONFIGURATION =================================================================
+      const BORO_NAME = "Manhattan";
+      const COUNTY_NAME = "New York";
+
+      // MAP BOUNDS - set bounds so the map has limits for visibility
+      var southWest = L.latLng(40.679547, -74.047729),
+        northEast = L.latLng(40.882214, -73.907005),
+        bounds = L.latLngBounds(southWest, northEast);
+      const INITIAL_ZOOM_LEVEL = 11.75;
+      const ZOOM_INCREMENT = 0.25;
+
+      // Manhattan Language Breaks
+      const arabicBreaks = [0, 14, 41, 78, 166, 258, 356];
+      const chineseBreaks = [0, 156, 422, 815, 1515, 2328, 6482];
+      const frenchBreaks = [0, 58, 143, 241, 347, 537, 826];
+      const germanBreaks = [0, 14, 42, 75, 115, 157, 238];
+      const koreanBreaks = [0, 14, 45, 89, 145, 235, 582];
+      const otherBreaks = [0, 38, 102, 186, 311, 478, 661];
+      const otherAsiaBreaks = [0, 19, 54, 100, 159, 266, 528];
+      const otherIndoBreaks = [0, 73, 168, 275, 379, 570, 1178];
+      const russianBreaks = [0, 32, 92, 177, 289, 414, 612];
+      const spanishBreaks = [0, 516, 1249, 2294, 3466, 5509, 9883];
+      const tagalogBreaks = [0, 9, 30, 59, 107, 186, 319];
+      const vietnameseBreaks = [0, 3, 13, 25, 44, 68, 158];
+      const totalPopBreaks = [17, 2034, 4028, 5916, 7877, 10125, 15945];
+
+      // Manhattan Health Breaks
+      const lackOfHealthInsuranceBreaks = [2, 4.5, 7.7, 11.5, 15.9, 19.8, 30.7];
+      const bingeDrinkingBreaks = [9.9, 14.6, 17.6, 20.2, 22.4, 24.8, 29.4];
+      const currentSmokingBreaks = [5.5, 8.3, 11.3, 14.8, 18.8, 22.7, 45.4];
+      const physicalInactivityBreaks = [
+        9.4, 15.1, 20.9, 27.1, 31.8, 38.5, 52.4,
+      ];
+      const sleepLessThan7HoursBreaks = [
+        24.7, 27.1, 29.4, 32.2, 35.8, 39.3, 49.1,
+      ];
+      const currentAsthmaBreaks = [8.4, 9.4, 10.1, 10.9, 11.8, 12.9, 14.9];
+      const highBloodPressureBreaks = [9, 16.6, 21.8, 26.7, 31, 35.8, 47.3];
+      const cancerExceptSkinBreaks = [1.5, 3.6, 4.7, 5.7, 6.9, 8.7, 11.4];
+      const cholesterolScreeningBreaks = [
+        72, 77.6, 83.7, 86.3, 88.8, 91.4, 95.2,
+      ];
+      const chronicKidneyDiseaseBreaks = [0.8, 1.6, 2.2, 2.8, 3.5, 4.3, 5.7];
+      const arthritisBreaks = [6.1, 11.1, 14.5, 17.6, 20.2, 23.4, 31.2];
+      const coronaryHeartDiseaseBreaks = [1, 2.6, 3.8, 5.1, 6.4, 8.6, 10.9];
+      const diabetesBreaks = [2, 4.7, 6.9, 9.7, 13, 16.3, 26];
+      const obesityBreaks = [12.6, 15.8, 18.5, 22.3, 25.7, 29.1, 43.1];
+      const strokeBreaks = [0.6, 1.3, 1.9, 2.5, 3.3, 4.4, 6.3];
+      const annualCheckupBreaks = [66.2, 69, 71.4, 73.4, 75.5, 78.1, 81.4];
+      const dentalVisitBreaks = [23.3, 42.3, 50.6, 59, 67.4, 75.1, 82.9];
+      const mammographyUseBreaks = [70.2, 74.5, 78.4, 79.5, 80.4, 81.7, 84.3];
+      const cervicalCancerScreeningBreaks = [
+        61.4, 69.3, 76.1, 81.3, 84.5, 87.3, 90.4,
+      ];
+      const colorectalCancerScreeningBreaks = [
+        53.9, 64, 69.5, 73.4, 76.8, 80.2, 85.1,
+      ];
+      const depressionBreaks = [14.6, 16.4, 19.1, 20.3, 21.4, 22.7, 26.5];
+      const frequentMentalHealthDistressBreaks = [
+        9.1, 11.5, 13.2, 14.9, 17, 19.3, 24.5,
+      ];
+      const frequentPhysicalHealthDistressBreaks = [
+        3.8, 6.2, 7.9, 10, 12.7, 15.8, 24.9,
+      ];
+      const fairOrPoorHealthBreaks = [4.3, 8.5, 13.2, 18.7, 23.5, 29.2, 47.8];
+      const anyDisabilityBreaks = [11.6, 17.9, 22.8, 29.1, 34.8, 41.8, 55.4];
+      const hearingDisabilityBreaks = [1.7, 3.2, 4.2, 5.3, 6.7, 8.3, 10.3];
+      const visionDisabilityBreaks = [1.4, 2.9, 4.7, 6.9, 9.4, 13, 25.1];
+      const cognitiveDisabilityBreaks = [
+        5.5, 7.9, 10.2, 12.7, 15.7, 19.2, 30.7,
+      ];
+      const mobilityDisabilityBreaks = [2.5, 7.2, 10.5, 14.3, 18.2, 23.7, 34.5];
+      const selfCareDisabilityBreaks = [0.8, 2.3, 3.8, 5.5, 7.3, 9.6, 19.8];
+      const independentLivingDisabilityBreaks = [
+        2.8, 4.7, 6.7, 9.4, 11.9, 14.9, 23.7,
+      ];
+      const highCholesterolBreaks = [17.2, 26.4, 30.2, 32.9, 35.7, 39.6, 54.4];
+    </script>
+   <script src="../geojson-data/neighborhood-summaries.js"></script>
+   <script src="../geojson-data/nyc-health-data.js"></script>
+   <script src="../geojson-data/zip-code-boundaries.js"></script>
+   <script src="../geojson-data/nyc-language-demographic.js"></script>
+   <script src="../geojson-data/zip-code-data.js"></script>
+   <script src="../geojson-data/community-districts.js"></script>
+   <script src="./chartHandler.js"></script>
+   <script src="./map.js"></script>
+   <script src="./zipCodeHandler.js"></script>
+   <script src="./popupHandler.js"></script>
+  </body>
+</html>
