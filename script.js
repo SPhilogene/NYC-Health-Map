@@ -167,8 +167,8 @@ info.onAdd = function (map) {
 info.update = function (props) {
   if (props) {
     this._div.innerHTML = `
-      <h4>${props.County} Data</h4>
-      <b>Total Population:</b> ${formatter.format(
+      <h4>${props.County} Data (2022)</h4>
+      <b>Total Population in 2022:</b> ${formatter.format(
         props["Total population"]
       )}<br />
       <b>Male Population:</b> ${formatter.format(props.Male)} (${
@@ -177,10 +177,11 @@ info.update = function (props) {
       <b>Female Population:</b> ${formatter.format(props.Female)} (${
       props["Female Pct"]
     }%)<br />
+    <br>
+      <b>Median Age:</b> ${props["Median age (years)"]}<br />
       <b>Under 5 Years:</b> ${formatter.format(props["Under 5 years"])} (${(
       props["Under 5 pct"] * 100
     ).toFixed(2)}%)<br />
-      <b>Median Age:</b> ${props["Median age (years)"]}<br />
       <b>Under 18 Years:</b> ${formatter.format(
         props["Under 18 years"]
       )} (${props["Under 18 pct"].toFixed(2)}%)<br />
@@ -190,6 +191,7 @@ info.update = function (props) {
       <b>65 Years and Over:</b> ${formatter.format(
         props["65 years and over"]
       )} (${(props["5 and up pct"] * 100).toFixed(2)}%)<br />
+      <br>
       <b>White Population:</b> ${formatter.format(props.White)} (${
       props["White pct"]
     }%)<br />
@@ -199,15 +201,27 @@ info.update = function (props) {
       <b>Asian Population:</b> ${formatter.format(props.Asian)} (${
       props["Asian pct"]
     }%)<br />
+      <b>American Indian and Alaska Native Population:</b> ${formatter.format(props["American Indian and Alaska Native"])} (${
+      props["AIAN Pct"]
+    }%)<br />
+      <b>Native Hawaiian and Other Pacific Islander Population:</b> ${formatter.format(props["Native Hawaiian and Other Pacific Islander"])} (${
+      props["NHOPI pct"]
+    }%)<br />
+      <b>Population of Other Races:</b> ${formatter.format(props["Some Other Race"])} (${
+      props["Other pct"]
+    }%)<br />
       <b>Hispanic or Latino Population:</b> ${formatter.format(
         props["Hispanic or Latino (of any race)"]
       )} (${props["Hispanic pct"]}%)<br />
       <b>Not Hispanic or Latino Population:</b> ${formatter.format(
         props["Not Hispanic or Latino"]
       )} (${props["Non Hispanic pct"]}%)<br />
-      <b>Total Population 2021 Estimates:</b> ${formatter.format(
-        props["Total population 2021 estimates"]
-      )}<br />
+      <br>
+      <b>Speak a language other than English:</b> ${formatter.format(
+        props["Speak other language"]
+      )} (${props["Pct other language"]})<br />
+      <b>Percent not fluent in Enlish:</b> ${props["Non-fluent"]}<br />
+      <br>
       <b>Lack of Health Insurance Crude Prevalence (%):</b> ${
         props["Lack of health insurance crude prevalence (%) *"]
       }%<br />
@@ -226,10 +240,14 @@ info.update = function (props) {
       <b>Obesity Crude Prevalence (%):</b> ${
         props["Obesity crude prevalence (%)"]
       }%<br />
+      <br>
+            <b>Total Population 2021:</b> ${formatter.format(
+        props["Total population 2021 estimates"]
+      )}<br />
     `;
   } else {
     this._div.innerHTML = `
-    <h4>NYC Borough Data</h4>
+    <h4>NYC Borough Data for 2022</h4>
     <p>Hover over a borough to see its data.<br>Click on a borough for more details.</p>
   `;
   }
