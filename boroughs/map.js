@@ -57,7 +57,7 @@ var zipCodeOverlay = L.geoJson(combineZipData(zipCodeBoundaries, zipCodeData), {
   onEachFeature: function(feature, layer) {
     //ADD POP UP
     layer.bindPopup('<h3> Zip code: ' + feature.properties.ZIPCODE + '<p>The estimated total population of people living in <strong>' + feature.properties.ZIPCODE + ' (' + feature.properties.Neighborhood + ') ' +
-                '</strong> is <strong>' + parseInt(feature.properties["2022 Total Population"]).toLocaleString("en-US") + '</strong>.</p><p style="font-size: 9px;">Data is from the 2020 PLACES: Local Data for Better Health project</p>');
+                '</strong> is <strong>' + parseInt(feature.properties["2022 Total Population"]).toLocaleString("en-US") + '</strong>.</p><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>');
     layer.on('mouseover', function() {
         layer.setStyle({
             fillOpacity: 0.8
@@ -96,7 +96,7 @@ var cdOverlay = L.geoJson((comDistrictBoundaries), {
 },
   onEachFeature: function(feature, layer) {
     //ADD POP UP
-    layer.bindPopup('<h3>'+ feature.properties.Borough + ' Community District ' + feature.properties.boro_cd + '<p>Find a detailed Community District profiles compiled by the Department of City Planning by following <a href="' + feature.properties.link + feature.properties.boro_cd + '" target="_blank">this link</a>');
+    layer.bindPopup('<h3>'+ feature.properties.Borough + ' Community District ' + feature.properties.boro_cd + '</h3><p>Find a detailed Community District profiles compiled by the Department of City Planning by following <a href="' + feature.properties.link + feature.properties.boro_cd + '" target="_blank">this link</a>');
     layer.on('mouseover', function() {
         layer.setStyle({
             fillOpacity: 0.8
@@ -299,7 +299,7 @@ languageLegend.onAdd = function () {
   div.innerHTML +=
     '<i style="background: #963f92ff"></i><span>Chinese</span><br>';
   div.innerHTML +=
-    '<i style="background: #6b5b95"></i><span>French, Haitian Creole, or Cajun</span><br>';
+    '<i style="background: #51eba6ff"></i><span>French, Haitian Creole, or Cajun</span><br>';
   div.innerHTML +=
     '<i style="background: #91c1fdff"></i><span>German or other West Germanic languages</span><br>';
   div.innerHTML += '<i style="background: #e7298a"></i><span>Korean</span><br>';
@@ -310,11 +310,11 @@ languageLegend.onAdd = function () {
   div.innerHTML +=
     '<i style="background: #3288bd"></i><span>Other Indo-European languages</span><br>';
   div.innerHTML +=
-    '<i style="background: #51eba6ff"></i><span>Russian, Polish, or other Slavic languages</span><br>';
+    '<i style="background: #"eb554dff></i><span>Russian, Polish, or other Slavic languages</span><br>';
   div.innerHTML +=
     '<i style="background: #41ab5d"></i><span>Spanish</span><br>';
   div.innerHTML +=
-    '<i style="background: #eb554dff"></i><span>Tagalog (incl. Filipino)</span><br>';
+    '<i style="background: #f8d791"></i><span>Tagalog (incl. Filipino)</span><br>';
   div.innerHTML +=
     '<i style="background: #ccb8cbff"></i><span>Vietnamese</span><br>';
   return div;
@@ -494,10 +494,10 @@ function updateMap() {
       if (selectedLanguage == "") {
         // Default popup content for predominant language
         popupContent =
-          "<h3>" + p.Geographic + "</h3>" + "<h5>(" + cdtanameClean + ")</h5>";
+          "<h3>" + p.Geographic + "</h3>" + "<h5>(" + cdtanameClean + ")</h5><br>";
 
         if (p.Estimate == "no data") {
-          popupContent += `No data avavailable for this Census Tract`;
+          popupContent += `No data available for this Census Tract`;
         } else {
           popupContent +=
             "Approximately <b>" +
@@ -508,7 +508,7 @@ function updateMap() {
             (p.Speak_anot * 100).toFixed(1) +
             "%</b> of these residents speak a language other than English. The predominant non-English spoken language is: <b>" +
             p.Predominant +
-            "</b>";
+            "</b> <br><p style='font-size: 9px;'>Data is from the American Community Survey Table C16001 <br> <i>Language Spoken at Home for the Population 5 Years and Over</i> (2022)</p>";
         }
       } else {
         // Popup content for selected language
@@ -520,112 +520,112 @@ function updateMap() {
         } else {
           switch (selectedLanguage) {
             case "Arabic":
-              popupContent += `<p>Number of Arabic speakers: <b>${
+              popupContent += `<p>Estimated number of Arabic speakers: <b>${
                 p.Arabic
               }</b></p>
               <p>Percentage of population speaking Arabic who are not fluent English speakers: <b>${(
                 p.Arabic_nf * 100
               ).toFixed(1)}%
-              </b></p>`;
+              </b></p> <p style='font-size: 9px;'>Data is from the American Community Survey Table C16001 <br> <i>Language Spoken at Home for the Population 5 Years and Over</i> (2022)</p>`;
               break;
 
             case "Chinese":
-              popupContent += `<p>Number of Chinese speakers: <b>${
+              popupContent += `<p>Estimated number of Chinese speakers: <b>${
                 p.Chinese
               }</b></p>
                 <p>Percentage of population speaking Chinese who are not fluent English speakers: <b>${(
                   p.Chinese_nf * 100
-                ).toFixed(1)}%</b></p>`;
+                ).toFixed(1)}%</b></p><p style='font-size: 9px;'>Data is from the American Community Survey Table C16001 <br> <i>Language Spoken at Home for the Population 5 Years and Over</i> (2022)</p>`;
               break;
 
             case "French, Haitian Creole, or Cajun":
-              popupContent += `<p>Number of French, Haitian Creole, or Cajun speakers: <b>${
+              popupContent += `<p>Estimated number of French, Haitian Creole, or Cajun speakers: <b>${
                 p.French
               }</b></p>
                 <p>Percentage of population speaking French, Haitian Creole, or Cajun who are not fluent English speakers: <b>${(
                   p.French_nf * 100
-                ).toFixed(1)}%</b></p>`;
+                ).toFixed(1)}%</b></p><p style='font-size: 9px;'>Data is from the American Community Survey Table C16001 <br> <i>Language Spoken at Home for the Population 5 Years and Over</i> (2022)</p>`;
               break;
 
             case "German or other West Germanic languages":
-              popupContent += `<p>Number of German or other West Germanic languages speakers: <b>${
+              popupContent += `<p>Estimated number of German or other West Germanic languages speakers, including speakers of Luxembourgish, Yiddish, Dutch, and Pennsylvania Dutch: <b>${
                 p.German
               }</b></p>
                 <p>Percentage of population speaking German or other West Germanic languages who are not fluent English speakers: <b>${(
                   p.German_nf * 100
-                ).toFixed(1)}%</b></p>`;
+                ).toFixed(1)}%</b></p><p style='font-size: 9px;'>Data is from the American Community Survey Table C16001 <br> <i>Language Spoken at Home for the Population 5 Years and Over</i> (2022)</p>`;
               break;
 
             case "Korean":
-              popupContent += `<p>Number of Korean speakers: <b>${
+              popupContent += `<p>Estimated number of Korean speakers: <b>${
                 p.Korean
               }</b></p>
                 <p>Percentage of population speaking Korean who are not fluent English speakers: <b>${(
                   p.Korean_nf * 100
-                ).toFixed(1)}%</b></p>`;
+                ).toFixed(1)}%</b></p><p style='font-size: 9px;'>Data is from the American Community Survey Table C16001 <br> <i>Language Spoken at Home for the Population 5 Years and Over</i> (2022)</p>`;
               break;
 
             case "Other and unspecified languages":
-              popupContent += `<p>Number of Other and unspecified languages speakers: <b>${
+              popupContent += `<p>Estimated number of Other and unspecified languages speakers: <b>${
                 p.Other
               }</b></p>
                 <p>Percentage of population speaking Other and unspecified languages who are not fluent English speakers: <b>${(
                   p.Other_nf * 100
-                ).toFixed(1)}%</b></p>`;
+                ).toFixed(1)}%</b></p><p style='font-size: 9px;'>Data is from the American Community Survey Table C16001 <br> <i>Language Spoken at Home for the Population 5 Years and Over</i> (2022)</p>`;
               break;
 
             case "Other Asian and Pacific Island languages":
-              popupContent += `<p>Number of speakers of Other Asian and Pacific Island languages: <b>${
+              popupContent += `<p>Estimated number of speakers of Other Asian and Pacific Island languages, including speakers ofJapanese, Hmong, Khmer, Lao, Thai; Dravidian languages of India such as Telugu, Tamil, and Malayalam; and other languages of Asia and the Pacific, including the Philippine, Polynesian, and Micronesian languages: <b>${
                 p.Other_Asia
               }</b></p>
                 <p>Percentage of population speaking Other Asian and Pacific Island languages who are not fluent English speakers: <b>${(
                   p.Other_Asia_nf * 100
-                ).toFixed(1)}%</b></p>`;
+                ).toFixed(1)}%</b></p><p style='font-size: 9px;'>Data is from the American Community Survey Table C16001 <br> <i>Language Spoken at Home for the Population 5 Years and Over</i> (2022)</p>`;
               break;
 
             case "Other Indo-European languages":
-              popupContent += `<p>Number of speakers of Other Indo-European languages: <b>${
+              popupContent += `<p>Estimated number of speakers of Indo-European languages, including speakers of Albanian, Lithuanian, Pashto (Pushto), Romanian, Swedish, Norwegian, Italian, and Portuguese; Indic languages such as Hindi, Gujarati, Punjabi, and Urdu; Celtic languages; Greek; Baltic languages; and Iranian languages: <b>${
                 p.Other_Indo
               }</b></p>
-                <p>Percentage of population speaking Other Indo-European languages who are not fluent English speakers: <b>${(
+                <p>Percentage of population speaking these Indo-European languages who are not fluent English speakers: <b>${(
                   p.Other_Indo_nf * 100
-                ).toFixed(1)}%</b></p>`;
+                ).toFixed(1)}%</b></p><p style='font-size: 9px;'>Data is from the American Community Survey Table C16001 <br> <i>Language Spoken at Home for the Population 5 Years and Over</i> (2022)</p>`;
               break;
 
             case "Russian, Polish, or other Slavic languages":
-              popupContent += `<p>Number of Russian, Polish, or other Slavic languages speakers: <b>${
+              popupContent += `<p>Estimated number of Russian, Polish, or other Slavic languages speakers, including speakers of Bulgarian, Czech, and Ukrainian: <b>${
                 p.Russian
               }</b></p>
                 <p>Percentage of population speaking Russian, Polish, or other Slavic languages who are not fluent English speakers: <b>${(
                   p.Russian_nf * 100
-                ).toFixed(1)}%</b></p>`;
+                ).toFixed(1)}%</b></p><p style='font-size: 9px;'>Data is from the American Community Survey Table C16001 <br> <i>Language Spoken at Home for the Population 5 Years and Over</i> (2022)</p>`;
               break;
 
             case "Spanish":
-              popupContent += `<p>Number of Spanish speakers: <b>${
+              popupContent += `<p>Estimated number of Spanish speakers, including speakers of Spanish Creole, and Ladino: <b>${
                 p.Spanish
               }</b></p>
                 <p>Percentage of population speaking Spanish who are not fluent English speakers: <b>${(
                   p.Spanish_nf * 100
-                ).toFixed(1)}%</b></p>`;
+                ).toFixed(1)}%</b></p><p style='font-size: 9px;'>Data is from the American Community Survey Table C16001 <br> <i>Language Spoken at Home for the Population 5 Years and Over</i> (2022)</p>`;
               break;
 
             case "Tagalog (incl. Filipino)":
-              popupContent += `<p>Number of Tagalog speakers: <b>${
+              popupContent += `<p>Estimated number of Tagalog and Filipino speakers: <b>${
                 p.Tagalog
               }</b></p>
-                <p>Percentage of population speaking Tagalog who are not fluent English speakers: <b>${(
+                <p>Percentage of population speaking Tagalog and Filipino who are not fluent English speakers: <b>${(
                   p.Tagalog_nf * 100
-                ).toFixed(1)}%</b></p>`;
+                ).toFixed(1)}%</b></p><p style='font-size: 9px;'>Data is from the American Community Survey Table C16001 <br> <i>Language Spoken at Home for the Population 5 Years and Over</i> (2022)</p>`;
               break;
 
             case "Vietnamese":
-              popupContent += `<p>Number of Vietnamese speakers: <b>${
+              popupContent += `<p>Estimated number of Vietnamese speakers: <b>${
                 p.Vietnamese
               }</b></p>
                 <p>Percentage of population speaking Vietnamese who are not fluent English speakers: <b>${(
                   p.Vietnamese_nf * 100
-                ).toFixed(1)}%</b></p>`;
+                ).toFixed(1)}%</b></p><p style='font-size: 9px;'>Data is from the American Community Survey Table C16001 <br> <i>Language Spoken at Home for the Population 5 Years and Over</i> (2022)</p>`;
               break;
           }
         }
@@ -758,19 +758,23 @@ demographicGeoJson = L.geoJson(languageGeoJsonData, {
         <p>Approximately <b>${parseInt(p.Total_pop).toLocaleString(
           "en-US"
         )}</b> people live in this census tract.</p>
-        <p><b>${(p.Male_Pct * 100).toFixed(1)}%</b> (${
-        p.Male
+        <p>Overall, <b>${(p.Male_Pct * 100).toFixed(1)}%</b> (${parseInt(p.Male).toLocaleString(
+          "en-US"
+        )
       }) of the population are male and <b>${(p.Female_Pct * 100).toFixed(
         1
-      )}%</b> (${p.Female}) of the population are female</p>
+      )}%</b> (${parseInt(p.Female).toLocaleString(
+          "en-US"
+        )
+      }) of the population are female.</p>
         <p>The median age is <b>${p.Median_age}</b>.</p>`;
 
       // Pie chart section
       // Use JSON.stringify to turn the properties object into a string so it can be passed into updatePieChart function
       // Chart container must have a set size or responsive popup plugin will not work as intended
       popUpContent += `
-      <button id="more-btn-${id}" onclick='showMoreButtons(${id})' style="background: none; border: none; color: blue; cursor: pointer; text-decoration: underline; padding: 0; margin-bottom: 4px">More</button>
-      <button id="hide-btn-${id}" onclick='hideMoreButtons(${id})' style="background: none; border: none; color: blue; cursor: pointer; text-decoration: underline; padding: 0; display:none; margin-bottom: 4px">Hide</button>
+      <button id="more-btn-${id}" onclick='showMoreButtons(${id})' style="background: none; border: none; color: blue; cursor: pointer; text-decoration: underline; padding: 0; margin-bottom: 4px">Click to See More</button>
+      <button id="hide-btn-${id}" onclick='hideMoreButtons(${id})' style="background: none; border: none; color: blue; cursor: pointer; text-decoration: underline; padding: 0; display:none; margin-bottom: 4px">Click to Hide</button>
       <div id="more-buttons-${id}" style="display:none;">
         <button onclick='updatePieChart(${id}, "gender", ${JSON.stringify(
         p
@@ -789,7 +793,7 @@ demographicGeoJson = L.geoJson(languageGeoJsonData, {
       )})' style="background: none; border: none; color: black; cursor: pointer; text-decoration: none; padding: 0; margin-left: 4px;" onmouseover="this.style.color='blue'" onmouseout="this.style.color='black'">Race</button>
         <div id="chart-container-${id}" style="width: 150px; height: 200px; height: 100%;"></div>
       </div>
-    `;
+    <br><p style='font-size: 9px;'>Data is from the American Community Survey Table DP05 <br> <i>ACS Demographic and Housing Estimates</i> (2022)</p>`;
     }
 
     var popup = L.responsivePopup().setContent(popUpContent);
@@ -947,7 +951,7 @@ function updatePieChart(id, type, properties) {
   } else if (type === "age") {
     pieData = [
       { label: "Under 18", value: properties.Under_18 },
-      { label: "18 and over", value: properties["18_plus"] },
+      { label: "18 to 64", value: properties["18_plus"]-properties["65_plus"] },
       { label: "65 and over", value: properties["65_plus"] },
     ];
     extraData = { "Under 18": properties.Under_5 };
@@ -1132,7 +1136,7 @@ function updateLegend(selectedLayer, selectedLanguage) {
       legendContent +=
         '<i style="background: #963f92ff"></i><span>Chinese</span><br>';
       legendContent +=
-        '<i style="background: #6b5b95"></i><span>French, Haitian Creole, or Cajun</span><br>';
+        '<i style="background: #51eba6ff"></i><span>French, Haitian Creole, or Cajun</span><br>';
       legendContent +=
         '<i style="background: #91c1fdff"></i><span>German or other West Germanic languages</span><br>';
       legendContent +=
@@ -1144,289 +1148,289 @@ function updateLegend(selectedLayer, selectedLanguage) {
       legendContent +=
         '<i style="background: #3288bd"></i><span>Other Indo-European languages</span><br>';
       legendContent +=
-        '<i style="background: #51eba6ff"></i><span>Russian, Polish, or other Slavic languages</span><br>';
+        '<i style="background: #eb554dff"></i><span>Russian, Polish, or other Slavic languages</span><br>';
       legendContent +=
         '<i style="background: #41ab5d"></i><span>Spanish</span><br>';
       legendContent +=
-        '<i style="background: #eb554dff"></i><span>Tagalog (incl. Filipino)</span><br>';
+        '<i style="background: #f8d791"></i><span>Tagalog (incl. Filipino)</span><br>';
       legendContent +=
         '<i style="background: #ccb8cbff"></i><span>Vietnamese</span><br>';
     } else {
       legendContent += `<h4>${selectedLanguage} Speakers</h4>`;
       switch (selectedLanguage) {
-        case "Arabic":
-          legendContent += `<i style="background: #00441b"></i><span>> ${arabicBreaks[6]}</span><br>`;
+        case "Arabic"://${parseInt(p.Female).toLocaleString("en-US")
+          legendContent += `<i style="background: #00441b"></i><span>> ${parseInt(arabicBreaks[6]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #006d2c"></i><span>${
-            arabicBreaks[5] + 1
-          } - ${arabicBreaks[6]}</span><br>`;
+            parseInt(arabicBreaks[5] + 1).toLocaleString("en-US")
+          } - ${parseInt(arabicBreaks[6]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #238b45"></i><span>${
-            arabicBreaks[4] + 1
-          } - ${arabicBreaks[5]}</span><br>`;
+            parseInt(arabicBreaks[4] + 1).toLocaleString("en-US")
+          } - ${parseInt(arabicBreaks[5]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #41ae76"></i><span>${
-            arabicBreaks[3] + 1
-          } - ${arabicBreaks[4]}</span><br>`;
+            parseInt(arabicBreaks[3] + 1).toLocaleString("en-US")
+          } - ${parseInt(arabicBreaks[4]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #66c2a4"></i><span>${
-            arabicBreaks[2] + 1
-          } - ${arabicBreaks[3]}</span><br>`;
+            parseInt(arabicBreaks[2] + 1).toLocaleString("en-US")
+          } - ${parseInt(arabicBreaks[3]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #99d8c9"></i><span>${
-            arabicBreaks[1] + 1
-          } - ${arabicBreaks[2]}</span><br>`;
-          legendContent += `<i style="background: #ccece6"></i><span>${arabicBreaks[0]} - ${arabicBreaks[1]}</span><br>`;
+            parseInt(arabicBreaks[1] + 1).toLocaleString("en-US")
+          } - ${parseInt(arabicBreaks[2]).toLocaleString("en-US")}</span><br>`;
+          legendContent += `<i style="background: #ccece6"></i><span>${parseInt(arabicBreaks[0]).toLocaleString("en-US")} - ${parseInt(arabicBreaks[1]).toLocaleString("en-US")}</span><br>`;
           legendContent +=
             '<i style="background: #606060"></i><span>No Data</span><br>';
           break;
         case "Chinese":
-          legendContent += `<i style="background: #00441b"></i><span>> ${chineseBreaks[6]}</span><br>`;
+          legendContent += `<i style="background: #00441b"></i><span>> ${parseInt(chineseBreaks[6]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #006d2c"></i><span>${
-            chineseBreaks[5] + 1
-          } - ${chineseBreaks[6]}</span><br>`;
+            parseInt(chineseBreaks[5] + 1).toLocaleString("en-US")
+          } - ${parseInt(chineseBreaks[6]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #238b45"></i><span>${
-            chineseBreaks[4] + 1
-          } - ${chineseBreaks[5]}</span><br>`;
+            parseInt(chineseBreaks[4] + 1).toLocaleString("en-US")
+          } - ${parseInt(chineseBreaks[5]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #41ae76"></i><span>${
-            chineseBreaks[3] + 1
-          } - ${chineseBreaks[4]}</span><br>`;
+            parseInt(chineseBreaks[3] + 1).toLocaleString("en-US")
+          } - ${parseInt(chineseBreaks[4]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #66c2a4"></i><span>${
-            chineseBreaks[2] + 1
-          } - ${chineseBreaks[3]}</span><br>`;
+            parseInt(chineseBreaks[2] + 1).toLocaleString("en-US")
+          } - ${parseInt(chineseBreaks[3]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #99d8c9"></i><span>${
-            chineseBreaks[1] + 1
-          } - ${chineseBreaks[2]}</span><br>`;
-          legendContent += `<i style="background: #ccece6"></i><span>${chineseBreaks[0]} - ${chineseBreaks[1]}</span><br>`;
+            parseInt(chineseBreaks[1] + 1).toLocaleString("en-US")
+          } - ${parseInt(chineseBreaks[2]).toLocaleString("en-US")}</span><br>`;
+          legendContent += `<i style="background: #ccece6"></i><span>${parseInt(chineseBreaks[0]).toLocaleString("en-US")} - ${parseInt(chineseBreaks[1]).toLocaleString("en-US")}</span><br>`;
           legendContent +=
             '<i style="background: #606060"></i><span>No Data</span><br>';
           break;
         case "French, Haitian Creole, or Cajun":
-          legendContent += `<i style="background: #00441b"></i><span>> ${frenchBreaks[6]}</span><br>`;
+          legendContent += `<i style="background: #00441b"></i><span>> ${parseInt(frenchBreaks[6]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #006d2c"></i><span>${
-            frenchBreaks[5] + 1
-          } - ${frenchBreaks[6]}</span><br>`;
+            parseInt(frenchBreaks[5] + 1).toLocaleString("en-US")
+          } - ${parseInt(frenchBreaks[6]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #238b45"></i><span>${
-            frenchBreaks[4] + 1
-          } - ${frenchBreaks[5]}</span><br>`;
+            parseInt(frenchBreaks[4] + 1).toLocaleString("en-US")
+          } - ${parseInt(frenchBreaks[5]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #41ae76"></i><span>${
-            frenchBreaks[3] + 1
-          } - ${frenchBreaks[4]}</span><br>`;
+            parseInt(frenchBreaks[3] + 1).toLocaleString("en-US")
+          } - ${parseInt(frenchBreaks[4]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #66c2a4"></i><span>${
-            frenchBreaks[2] + 1
-          } - ${frenchBreaks[3]}</span><br>`;
+            parseInt(frenchBreaks[2] + 1).toLocaleString("en-US")
+          } - ${parseInt(frenchBreaks[3]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #99d8c9"></i><span>${
-            frenchBreaks[1] + 1
-          } - ${frenchBreaks[2]}</span><br>`;
-          legendContent += `<i style="background: #ccece6"></i><span>${frenchBreaks[0]} - ${frenchBreaks[1]}</span><br>`;
+            parseInt(frenchBreaks[1] + 1).toLocaleString("en-US")
+          } - ${parseInt(frenchBreaks[2]).toLocaleString("en-US")}</span><br>`;
+          legendContent += `<i style="background: #ccece6"></i><span>${parseInt(frenchBreaks[0]).toLocaleString("en-US")} - ${parseInt(frenchBreaks[1]).toLocaleString("en-US")}</span><br>`;
           legendContent +=
             '<i style="background: #606060"></i><span>No Data</span><br>';
           break;
         case "German or other West Germanic languages":
-          legendContent += `<i style="background: #00441b"></i><span>> ${germanBreaks[6]}</span><br>`;
+          legendContent += `<i style="background: #00441b"></i><span>> ${parseInt(germanBreaks[6]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #006d2c"></i><span>${
-            germanBreaks[5] + 1
-          } - ${germanBreaks[6]}</span><br>`;
+            parseInt(germanBreaks[5] + 1).toLocaleString("en-US")
+          } - ${parseInt(germanBreaks[6]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #238b45"></i><span>${
-            germanBreaks[4] + 1
-          } - ${germanBreaks[5]}</span><br>`;
+            parseInt(germanBreaks[4] + 1).toLocaleString("en-US")
+          } - ${parseInt(germanBreaks[5]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #41ae76"></i><span>${
-            germanBreaks[3] + 1
-          } - ${germanBreaks[4]}</span><br>`;
+            parseInt(germanBreaks[3] + 1).toLocaleString("en-US")
+          } - ${parseInt(germanBreaks[4]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #66c2a4"></i><span>${
-            germanBreaks[2] + 1
-          } - ${germanBreaks[3]}</span><br>`;
+            parseInt(germanBreaks[2] + 1).toLocaleString("en-US")
+          } - ${parseInt(germanBreaks[3]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #99d8c9"></i><span>${
-            germanBreaks[1] + 1
-          } - ${germanBreaks[2]}</span><br>`;
-          legendContent += `<i style="background: #ccece6"></i><span>${germanBreaks[0]} - ${germanBreaks[1]}</span><br>`;
+            parseInt(germanBreaks[1] + 1).toLocaleString("en-US")
+          } - ${parseInt(germanBreaks[2]).toLocaleString("en-US")}</span><br>`;
+          legendContent += `<i style="background: #ccece6"></i><span>${parseInt(germanBreaks[0]).toLocaleString("en-US")} - ${parseInt(germanBreaks[1]).toLocaleString("en-US")}</span><br>`;
           legendContent +=
             '<i style="background: #606060"></i><span>No Data</span><br>';
           break;
         case "Korean":
-          legendContent += `<i style="background: #00441b"></i><span>> ${koreanBreaks[6]}</span><br>`;
+          legendContent += `<i style="background: #00441b"></i><span>> ${parseInt(koreanBreaks[6]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #006d2c"></i><span>${
-            koreanBreaks[5] + 1
-          } - ${koreanBreaks[6]}</span><br>`;
+            parseInt(koreanBreaks[5] + 1).toLocaleString("en-US")
+          } - ${parseInt(koreanBreaks[6]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #238b45"></i><span>${
-            koreanBreaks[4] + 1
-          } - ${koreanBreaks[5]}</span><br>`;
+            parseInt(koreanBreaks[4] + 1).toLocaleString("en-US")
+          } - ${parseInt(koreanBreaks[5]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #41ae76"></i><span>${
-            koreanBreaks[3] + 1
-          } - ${koreanBreaks[4]}</span><br>`;
+            parseInt(koreanBreaks[3] + 1).toLocaleString("en-US")
+          } - ${parseInt(koreanBreaks[4]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #66c2a4"></i><span>${
-            koreanBreaks[2] + 1
-          } - ${koreanBreaks[3]}</span><br>`;
+            parseInt(koreanBreaks[2] + 1).toLocaleString("en-US")
+          } - ${parseInt(koreanBreaks[3]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #99d8c9"></i><span>${
-            koreanBreaks[1] + 1
-          } - ${koreanBreaks[2]}</span><br>`;
-          legendContent += `<i style="background: #ccece6"></i><span>${koreanBreaks[0]} - ${koreanBreaks[1]}</span><br>`;
+            parseInt(koreanBreaks[1] + 1).toLocaleString("en-US")
+          } - ${parseInt(koreanBreaks[2]).toLocaleString("en-US")}</span><br>`;
+          legendContent += `<i style="background: #ccece6"></i><span>${parseInt(koreanBreaks[0]).toLocaleString("en-US")} - ${parseInt(koreanBreaks[1]).toLocaleString("en-US")}</span><br>`;
           legendContent +=
             '<i style="background: #606060"></i><span>No Data</span><br>';
           break;
         case "Other and unspecified languages":
-          legendContent += `<i style="background: #00441b"></i><span>> ${otherBreaks[6]}</span><br>`;
+          legendContent += `<i style="background: #00441b"></i><span>> ${parseInt(otherBreaks[6]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #006d2c"></i><span>${
-            otherBreaks[5] + 1
-          } - ${otherBreaks[6]}</span><br>`;
+            parseInt(otherBreaks[5] + 1).toLocaleString("en-US")
+          } - ${parseInt(otherBreaks[6]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #238b45"></i><span>${
-            otherBreaks[4] + 1
-          } - ${otherBreaks[5]}</span><br>`;
+            parseInt(otherBreaks[4] + 1).toLocaleString("en-US")
+          } - ${parseInt(otherBreaks[5]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #41ae76"></i><span>${
-            otherBreaks[3] + 1
-          } - ${otherBreaks[4]}</span><br>`;
+            parseInt(otherBreaks[3] + 1).toLocaleString("en-US")
+          } - ${parseInt(otherBreaks[4]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #66c2a4"></i><span>${
-            otherBreaks[2] + 1
-          } - ${otherBreaks[3]}</span><br>`;
+            parseInt(otherBreaks[2] + 1).toLocaleString("en-US")
+          } - ${parseInt(otherBreaks[3]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #99d8c9"></i><span>${
-            otherBreaks[1] + 1
-          } - ${otherBreaks[2]}</span><br>`;
-          legendContent += `<i style="background: #ccece6"></i><span>${otherBreaks[0]} - ${otherBreaks[1]}</span><br>`;
+            parseInt(otherBreaks[1] + 1).toLocaleString("en-US")
+          } - ${parseInt(otherBreaks[2]).toLocaleString("en-US")}</span><br>`;
+          legendContent += `<i style="background: #ccece6"></i><span>${parseInt(otherBreaks[0]).toLocaleString("en-US")} - ${parseInt(otherBreaks[1]).toLocaleString("en-US")}</span><br>`;
           legendContent +=
             '<i style="background: #606060"></i><span>No Data</span><br>';
           break;
         case "Other Asian and Pacific Island languages":
-          legendContent += `<i style="background: #00441b"></i><span>> ${otherAsiaBreaks[6]}</span><br>`;
+          legendContent += `<i style="background: #00441b"></i><span>> ${parseInt(otherAsiaBreaks[6]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #006d2c"></i><span>${
-            otherAsiaBreaks[5] + 1
-          } - ${otherAsiaBreaks[6]}</span><br>`;
+            parseInt(otherAsiaBreaks[5] + 1).toLocaleString("en-US")
+          } - ${parseInt(otherAsiaBreaks[6]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #238b45"></i><span>${
-            otherAsiaBreaks[4] + 1
-          } - ${otherAsiaBreaks[5]}</span><br>`;
+            parseInt(otherAsiaBreaks[4] + 1).toLocaleString("en-US")
+          } - ${parseInt(otherAsiaBreaks[5]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #41ae76"></i><span>${
-            otherAsiaBreaks[3] + 1
-          } - ${otherAsiaBreaks[4]}</span><br>`;
+            parseInt(otherAsiaBreaks[3] + 1).toLocaleString("en-US")
+          } - ${parseInt(otherAsiaBreaks[4]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #66c2a4"></i><span>${
-            otherAsiaBreaks[2] + 1
-          } - ${otherAsiaBreaks[3]}</span><br>`;
+            parseInt(otherAsiaBreaks[2] + 1).toLocaleString("en-US")
+          } - ${parseInt(otherAsiaBreaks[3]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #99d8c9"></i><span>${
-            otherAsiaBreaks[1] + 1
-          } - ${otherAsiaBreaks[2]}</span><br>`;
-          legendContent += `<i style="background: #ccece6"></i><span>${otherAsiaBreaks[0]} - ${otherAsiaBreaks[1]}</span><br>`;
+            parseInt(otherAsiaBreaks[1] + 1).toLocaleString("en-US")
+          } - ${parseInt(otherAsiaBreaks[2]).toLocaleString("en-US")}</span><br>`;
+          legendContent += `<i style="background: #ccece6"></i><span>${parseInt(otherAsiaBreaks[0]).toLocaleString("en-US")} - ${parseInt(otherAsiaBreaks[1]).toLocaleString("en-US")}</span><br>`;
           legendContent +=
             '<i style="background: #606060"></i><span>No Data</span><br>';
           break;
         case "Other Indo-European languages":
-          legendContent += `<i style="background: #00441b"></i><span>> ${otherIndoBreaks[6]}</span><br>`;
+          legendContent += `<i style="background: #00441b"></i><span>> ${parseInt(otherIndoBreaks[6]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #006d2c"></i><span>${
-            otherIndoBreaks[5] + 1
-          } - ${otherIndoBreaks[6]}</span><br>`;
+            parseInt(otherIndoBreaks[5] + 1).toLocaleString("en-US")
+          } - ${parseInt(otherIndoBreaks[6]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #238b45"></i><span>${
-            otherIndoBreaks[4] + 1
-          } - ${otherIndoBreaks[5]}</span><br>`;
+            parseInt(otherIndoBreaks[4] + 1).toLocaleString("en-US")
+          } - ${parseInt(otherIndoBreaks[5]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #41ae76"></i><span>${
-            otherIndoBreaks[3] + 1
-          } - ${otherIndoBreaks[4]}</span><br>`;
+            parseInt(otherIndoBreaks[3] + 1).toLocaleString("en-US")
+          } - ${parseInt(otherIndoBreaks[4]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #66c2a4"></i><span>${
-            otherIndoBreaks[2] + 1
-          } - ${otherIndoBreaks[3]}</span><br>`;
+            parseInt(otherIndoBreaks[2] + 1).toLocaleString("en-US")
+          } - ${parseInt(otherIndoBreaks[3]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #99d8c9"></i><span>${
-            otherIndoBreaks[1] + 1
-          } - ${otherIndoBreaks[2]}</span><br>`;
-          legendContent += `<i style="background: #ccece6"></i><span>${otherIndoBreaks[0]} - ${otherIndoBreaks[1]}</span><br>`;
+            parseInt(otherIndoBreaks[1] + 1).toLocaleString("en-US")
+          } - ${parseInt(otherIndoBreaks[2]).toLocaleString("en-US")}</span><br>`;
+          legendContent += `<i style="background: #ccece6"></i><span>${parseInt(otherIndoBreaks[0]).toLocaleString("en-US")} - ${parseInt(otherIndoBreaks[1]).toLocaleString("en-US")}</span><br>`;
           legendContent +=
             '<i style="background: #606060"></i><span>No Data</span><br>';
           break;
         case "Russian, Polish, or other Slavic languages":
-          legendContent += `<i style="background: #00441b"></i><span>> ${russianBreaks[6]}</span><br>`;
+          legendContent += `<i style="background: #00441b"></i><span>> ${parseInt(russianBreaks[6]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #006d2c"></i><span>${
-            russianBreaks[5] + 1
-          } - ${russianBreaks[6]}</span><br>`;
+            parseInt(russianBreaks[5] + 1).toLocaleString("en-US")
+          } - ${parseInt(russianBreaks[6]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #238b45"></i><span>${
-            russianBreaks[4] + 1
-          } - ${russianBreaks[5]}</span><br>`;
+            parseInt(russianBreaks[4] + 1).toLocaleString("en-US")
+          } - ${parseInt(russianBreaks[5]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #41ae76"></i><span>${
-            russianBreaks[3] + 1
-          } - ${russianBreaks[4]}</span><br>`;
+            parseInt(russianBreaks[3] + 1).toLocaleString("en-US")
+          } - ${parseInt(russianBreaks[4]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #66c2a4"></i><span>${
-            russianBreaks[2] + 1
-          } - ${russianBreaks[3]}</span><br>`;
+            parseInt(russianBreaks[2] + 1).toLocaleString("en-US")
+          } - ${parseInt(russianBreaks[3]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #99d8c9"></i><span>${
-            russianBreaks[1] + 1
-          } - ${russianBreaks[2]}</span><br>`;
-          legendContent += `<i style="background: #ccece6"></i><span>${russianBreaks[0]} - ${russianBreaks[1]}</span><br>`;
+            parseInt(russianBreaks[1] + 1).toLocaleString("en-US")
+          } - ${parseInt(russianBreaks[2]).toLocaleString("en-US")}</span><br>`;
+          legendContent += `<i style="background: #ccece6"></i><span>${parseInt(russianBreaks[0]).toLocaleString("en-US")} - ${parseInt(russianBreaks[1]).toLocaleString("en-US")}</span><br>`;
           legendContent +=
             '<i style="background: #606060"></i><span>No Data</span><br>';
           break;
         case "Spanish":
-          legendContent += `<i style="background: #00441b"></i><span>> ${spanishBreaks[6]}</span><br>`;
+          legendContent += `<i style="background: #00441b"></i><span>> ${parseInt(spanishBreaks[6]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #006d2c"></i><span>${
-            spanishBreaks[5] + 1
-          } - ${spanishBreaks[6]}</span><br>`;
+            parseInt(spanishBreaks[5] + 1).toLocaleString("en-US")
+          } - ${parseInt(spanishBreaks[6]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #238b45"></i><span>${
-            spanishBreaks[4] + 1
-          } - ${spanishBreaks[5]}</span><br>`;
+            parseInt(spanishBreaks[4] + 1).toLocaleString("en-US")
+          } - ${parseInt(spanishBreaks[5]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #41ae76"></i><span>${
-            spanishBreaks[3] + 1
-          } - ${spanishBreaks[4]}</span><br>`;
+            parseInt(spanishBreaks[3] + 1).toLocaleString("en-US")
+          } - ${parseInt(spanishBreaks[4]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #66c2a4"></i><span>${
-            spanishBreaks[2] + 1
-          } - ${spanishBreaks[3]}</span><br>`;
+            parseInt(spanishBreaks[2] + 1).toLocaleString("en-US")
+          } - ${parseInt(spanishBreaks[3]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #99d8c9"></i><span>${
-            spanishBreaks[1] + 1
-          } - ${spanishBreaks[2]}</span><br>`;
-          legendContent += `<i style="background: #ccece6"></i><span>${spanishBreaks[0]} - ${spanishBreaks[1]}</span><br>`;
+            parseInt(spanishBreaks[1] + 1).toLocaleString("en-US")
+          } - ${parseInt(spanishBreaks[2]).toLocaleString("en-US")}</span><br>`;
+          legendContent += `<i style="background: #ccece6"></i><span>${parseInt(spanishBreaks[0]).toLocaleString("en-US")} - ${parseInt(spanishBreaks[1]).toLocaleString("en-US")}</span><br>`;
           legendContent +=
             '<i style="background: #606060"></i><span>No Data</span><br>';
           break;
         case "Tagalog (incl. Filipino)":
-          legendContent += `<i style="background: #00441b"></i><span>> ${tagalogBreaks[6]}</span><br>`;
+          legendContent += `<i style="background: #00441b"></i><span>> ${parseInt(tagalogBreaks[6]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #006d2c"></i><span>${
-            tagalogBreaks[5] + 1
-          } - ${tagalogBreaks[6]}</span><br>`;
+            parseInt(tagalogBreaks[5] + 1).toLocaleString("en-US")
+          } - ${parseInt(tagalogBreaks[6]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #238b45"></i><span>${
-            tagalogBreaks[4] + 1
-          } - ${tagalogBreaks[5]}</span><br>`;
+            parseInt(tagalogBreaks[4] + 1).toLocaleString("en-US")
+          } - ${parseInt(tagalogBreaks[5]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #41ae76"></i><span>${
-            tagalogBreaks[3] + 1
-          } - ${tagalogBreaks[4]}</span><br>`;
+            parseInt(tagalogBreaks[3] + 1).toLocaleString("en-US")
+          } - ${parseInt(tagalogBreaks[4]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #66c2a4"></i><span>${
-            tagalogBreaks[2] + 1
-          } - ${tagalogBreaks[3]}</span><br>`;
+            parseInt(tagalogBreaks[2] + 1).toLocaleString("en-US")
+          } - ${parseInt(tagalogBreaks[3]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #99d8c9"></i><span>${
-            tagalogBreaks[1] + 1
-          } - ${tagalogBreaks[2]}</span><br>`;
-          legendContent += `<i style="background: #ccece6"></i><span>${tagalogBreaks[0]} - ${tagalogBreaks[1]}</span><br>`;
+            parseInt(tagalogBreaks[1] + 1).toLocaleString("en-US")
+          } - ${parseInt(tagalogBreaks[2]).toLocaleString("en-US")}</span><br>`;
+          legendContent += `<i style="background: #ccece6"></i><span>${parseInt(tagalogBreaks[0]).toLocaleString("en-US")} - ${parseInt(tagalogBreaks[1]).toLocaleString("en-US")}</span><br>`;
           legendContent +=
             '<i style="background: #606060"></i><span>No Data</span><br>';
           break;
         case "Vietnamese":
-          legendContent += `<i style="background: #00441b"></i><span>> ${vietnameseBreaks[6]}</span><br>`;
+          legendContent += `<i style="background: #00441b"></i><span>> ${parseInt(vietnameseBreaks[6]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #006d2c"></i><span>${
-            vietnameseBreaks[5] + 1
-          } - ${vietnameseBreaks[6]}</span><br>`;
+            parseInt(vietnameseBreaks[5] + 1).toLocaleString("en-US")
+          } - ${parseInt(vietnameseBreaks[6]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #238b45"></i><span>${
-            vietnameseBreaks[4] + 1
-          } - ${vietnameseBreaks[5]}</span><br>`;
+            parseInt(vietnameseBreaks[4] + 1).toLocaleString("en-US")
+          } - ${parseInt(vietnameseBreaks[5]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #41ae76"></i><span>${
-            vietnameseBreaks[3] + 1
-          } - ${vietnameseBreaks[4]}</span><br>`;
+            parseInt(vietnameseBreaks[3] + 1).toLocaleString("en-US")
+          } - ${parseInt(vietnameseBreaks[4]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #66c2a4"></i><span>${
-            vietnameseBreaks[2] + 1
-          } - ${vietnameseBreaks[3]}</span><br>`;
+            parseInt(vietnameseBreaks[2] + 1).toLocaleString("en-US")
+          } - ${parseInt(vietnameseBreaks[3]).toLocaleString("en-US")}</span><br>`;
           legendContent += `<i style="background: #99d8c9"></i><span>${
-            vietnameseBreaks[1] + 1
-          } - ${vietnameseBreaks[2]}</span><br>`;
-          legendContent += `<i style="background: #ccece6"></i><span>${vietnameseBreaks[0]} - ${vietnameseBreaks[1]}</span><br>`;
+            parseInt(vietnameseBreaks[1] + 1).toLocaleString("en-US")
+          } - ${parseInt(vietnameseBreaks[2]).toLocaleString("en-US")}</span><br>`;
+          legendContent += `<i style="background: #ccece6"></i><span>${parseInt(vietnameseBreaks[0]).toLocaleString("en-US")} - ${parseInt(vietnameseBreaks[1]).toLocaleString("en-US")}</span><br>`;
           legendContent +=
             '<i style="background: #606060"></i><span>No Data</span><br>';
           break;
       }
     }
   } else if ((selectedLayer = "demographics")) {
-    legendContent += "<h4>Population Density</h4>";
-    legendContent += `<i style="background: #00441b"></i><span>> ${totalPopBreaks[6]}</span><br>`;
+    legendContent += "<h4>Population Density</h4>"; 
+    legendContent += `<i style="background: #00441b"></i><span>> ${parseInt(totalPopBreaks[6]).toLocaleString("en-US")}</span><br>`;
     legendContent += `<i style="background: #006d2c"></i><span>${
-      totalPopBreaks[5] + 1
-    } - ${totalPopBreaks[6]}</span><br>`;
+      parseInt(totalPopBreaks[5] + 1).toLocaleString("en-US")
+    } - ${parseInt(totalPopBreaks[6]).toLocaleString("en-US")}</span><br>`;
     legendContent += `<i style="background: #238b45"></i><span>${
-      totalPopBreaks[4] + 1
-    } - ${totalPopBreaks[5]}</span><br>`;
+      parseInt(totalPopBreaks[4] + 1).toLocaleString("en-US")
+    } - ${parseInt(totalPopBreaks[5]).toLocaleString("en-US")}</span><br>`;
     legendContent += `<i style="background: #41ae76"></i><span>${
-      totalPopBreaks[3] + 1
-    } - ${totalPopBreaks[4]}</span><br>`;
+      parseInt(totalPopBreaks[3] + 1).toLocaleString("en-US")
+    } - ${parseInt(totalPopBreaks[4]).toLocaleString("en-US")}</span><br>`;
     legendContent += `<i style="background: #66c2a4"></i><span>${
-      totalPopBreaks[2] + 1
-    } - ${totalPopBreaks[3]}</span><br>`;
+      parseInt(totalPopBreaks[2] + 1).toLocaleString("en-US")
+    } - ${parseInt(totalPopBreaks[3]).toLocaleString("en-US")}</span><br>`;
     legendContent += `<i style="background: #99d8c9"></i><span>${
-      totalPopBreaks[1] + 1
-    } - ${totalPopBreaks[2]}</span><br>`;
-    legendContent += `<i style="background: #ccece6"></i><span>${totalPopBreaks[0]} - ${totalPopBreaks[1]}</span><br>`;
+      parseInt(totalPopBreaks[1] + 1).toLocaleString("en-US")
+    } - ${parseInt(totalPopBreaks[2]).toLocaleString("en-US")}</span><br>`;
+    legendContent += `<i style="background: #ccece6"></i><span>${parseInt(totalPopBreaks[0]).toLocaleString("en-US")} - ${parseInt(totalPopBreaks[1]).toLocaleString("en-US")}</span><br>`;
     legendContent +=
       '<i style="background: #606060"></i><span>No Data</span><br>';
   } 
@@ -1519,6 +1523,10 @@ function getColorHealthRisk(layerName) {
   }
 }
 
+// "Neighborhood name": "Annadale-Huguenot-Prince's Bay-Woodrow",
+//         "Tract number": "176",
+//         "Census tract name": "Census Tract 176",
+// "<h3>" + p.Geographic + "</h3>" + "<h5>(" + cdtanameClean + ")</h5>";
 
 function addHealthRiskData(data) {
   data.features.forEach(function (feature) {
@@ -1529,38 +1537,43 @@ function addHealthRiskData(data) {
     var p = feature.properties;
 
     var uninsuredPopup = `
-      <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-      Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated lack of health insurance crude prevalence is 
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+      Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated lack of health insurance crude prevalence is 
       <b>${p["Lack of health insurance crude prevalence (%)"]}%</b>
-      ${p["Lack of health insurance crude prevalence 95% CI"]}.
+      ${p["Lack of health insurance crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
     `;
 
     var frequentDrinkersPopup = `
-      <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-      Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated binge drinking crude prevalence is 
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+      Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated binge drinking crude prevalence is 
       <b>${p["Binge drinking crude prevalence (%)"]}%</b> 
-      ${p["Binge drinking crude prevalence 95% CI"]}.
+      ${p["Binge drinking crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
     `;
 
     var currentSmokersPopup = `
-      <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-      Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated current smoking crude prevalence is 
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+      Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated current smoking crude prevalence is 
       <b>${p["Current smoking crude prevalence (%)"]}%</b> 
-      ${p["Current smoking crude prevalence 95% CI"]}.
+      ${p["Current smoking crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
     `;
 
     var sedentaryLifestylePopup = `
-      <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-      Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated physical inactivity crude prevalence is 
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+      Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated physical inactivity crude prevalence is 
       <b>${p["Physical inactivity crude prevalence (%)"]}%</b> 
-      ${p["Physical inactivity crude prevalence 95% CI"]}.
+      ${p["Physical inactivity crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
     `;
 
     var sleepLessThan7HoursPopup = `
-      <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-      Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated prevalence of sleep less than 7 hours is 
-      <b>${p["Sleep <7 hours crude prevalence (%)"]}%</b> 
-      ${p["Sleep <7 hours crude prevalence 95% CI"]}.
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+      Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated prevalence of sleep less than 7 hours is 
+      <b>${p["Sleep  u003c7 hours crude prevalence (%)"]}%</b> 
+      ${p["Sleep  u003c7 hours crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
     `;
 
     var uninsuredLayer = L.geoJson(feature, {
@@ -1623,7 +1636,7 @@ function addHealthRiskData(data) {
 
     var sleepLessThan7HoursLayer = L.geoJson(feature, {
       style: healthRiskStyle(
-        "Sleep <7 hours crude prevalence (%)",
+        "Sleep  u003c7 hours crude prevalence (%)",
         getColorForSleepLessThan7Hours
       ),
       onEachFeature: function (feature, layer) {
@@ -1925,73 +1938,83 @@ function addHealthOutcomesData(data) {
     var p = feature.properties;
 
     var currentAsthmaPopup = `
-    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated current asthma crude prevalence is 
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+    Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated current asthma crude prevalence is 
     <b>${p["Current asthma crude prevalence (%)"]}%</b> 
-    ${p["Current asthma crude prevalence 95% CI"]}.
+    ${p["Current asthma crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
   `;
 
     var highBloodPopup = `
-    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated high blood pressure crude prevalence is 
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+    Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated high blood pressure crude prevalence is 
     <b>${p["High blood pressure crude prevalence (%)"]}%</b> 
-    ${p["High blood pressure crude prevalence 95% CI"]}.
+    ${p["High blood pressure crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
   `;
 
     var cancerAdultsPopup = `
-    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated cancer (except skin) crude prevalence is 
-    <b>${p["Cancer (except skin) crude prevalence (%)"]}%</b> 
-    ${p["Cancer (except skin) crude prevalence 95% CI"]}.
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+    Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated cancer (except skin) crude prevalence is 
+    <b>${p["Cancer  except skin  crude prevalence (%)"]}%</b> 
+    ${p["Cancer  except skin  crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
   `;
 
     var highCholesterolPopup = `
-    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated high cholesterol crude prevalence is 
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+    Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated high cholesterol crude prevalence is 
     <b>${p["High cholesterol crude prevalence (%)"]}%</b> 
-    ${p["High cholesterol crude prevalence 95% CI"]}.
+    ${p["High cholesterol crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
   `;
 
     var kidneyDiseasePopup = `
-    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated chronic kidney disease crude prevalence is 
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+    Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated chronic kidney disease crude prevalence is 
     <b>${p["Chronic kidney disease crude prevalence (%)"]}%</b> 
-    ${p["Chronic kidney disease crude prevalence 95% CI"]}.
+    ${p["Chronic kidney disease crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
   `;
 
     var pulmonaryDiseasePopup = `
-    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated pulmonary disease crude prevalence is 
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+    Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated pulmonary disease crude prevalence is 
     <b>${p["Arthritis crude prevalence (%)"]}%</b> 
-    ${p["Arthritis crude prevalence 95% CI"]}.
+    ${p["Arthritis crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
   `;
 
     var heartDiseasePopup = `
-    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated heart disease crude prevalence is 
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+    Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated heart disease crude prevalence is 
     <b>${p["Coronary heart disease crude prevalence (%)"]}%</b> 
-    ${p["Coronary heart disease crude prevalence 95% CI"]}.
+    ${p["Coronary heart disease crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
   `;
 
     var diabetesPopup = `
-    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated diabetes crude prevalence is 
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+    Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated diabetes crude prevalence is 
     <b>${p["Diabetes crude prevalence (%)"]}%</b> 
-    ${p["Diabetes crude prevalence 95% CI"]}.
+    ${p["Diabetes crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
   `;
 
     var obesityPopup = `
-    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated obesity crude prevalence is 
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+    Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated obesity crude prevalence is 
     <b>${p["Obesity crude prevalence (%)"]}%</b> 
-    ${p["Obesity crude prevalence 95% CI"]}.
+    ${p["Obesity crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
   `;
 
     var strokePopup = `
-    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated stroke crude prevalence is 
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+    Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated stroke crude prevalence is 
     <b>${p["Stroke crude prevalence (%)"]}%</b> 
-    ${p["Stroke crude prevalence 95% CI"]}.
+    ${p["Stroke crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
   `;
 
     var currentAsthmaLayer = L.geoJson(feature, {
@@ -2026,7 +2049,7 @@ function addHealthOutcomesData(data) {
 
     var cancerAdultsLayer = L.geoJson(feature, {
       style: healthOutcomesStyle(
-        "Cancer (except skin) crude prevalence (%)",
+        "Cancer  except skin  crude prevalence (%)",
         getColorForCancerAdults
       ),
       onEachFeature: function (feature, layer) {
@@ -2589,45 +2612,51 @@ function addScreeningRatesData(data) {
     var p = feature.properties;
 
     var annualCheckUpPopup = `
-    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated annual checkup crude prevalence is 
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+    Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated annual checkup crude prevalence is 
     <b>${p["Annual checkup crude prevalence (%)"]}%</b> 
-    ${p["Annual checkup crude prevalence 95% CI"]}.
+    ${p["Annual checkup crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
   `;
 
     var dentalVisitPopup = `
-    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated dental visit crude prevalence is 
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+    Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated dental visit crude prevalence is 
     <b>${p["Dental visit crude prevalence (%)"]}%</b> 
-    ${p["Dental visit crude prevalence 95% CI"]}.
+    ${p["Dental visit crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
   `;
 
     var cholesterolScreeningPopup = `
-    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated cholesterol screening crude prevalence is 
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+    Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated cholesterol screening crude prevalence is 
     <b>${p["Cholesterol screening crude prevalence (%)"]}%</b> 
-    ${p["Cholesterol screening crude prevalence 95% CI"]}.
+    ${p["Cholesterol screening crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
   `;
 
     var mammographyScreeningPopup = `
-    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated mammography screening crude prevalence is 
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+    Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated mammography screening crude prevalence is 
     <b>${p["Mammography use crude prevalence (%)"]}%</b> 
-    ${p["Mammography use crude prevalence 95% CI"]}.
+    ${p["Mammography use crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
   `;
 
     var cervicalScreeningPopup = `
-    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated cervical screening crude prevalence is 
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+    Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated cervical screening crude prevalence is 
     <b>${p["Cervical cancer screening crude prevalence (%)"]}%</b> 
-    ${p["Cervical cancer screening crude prevalence 95% CI"]}.
+    ${p["Cervical cancer screening crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
   `;
 
     var colorectalScreeningPopup = `
-    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated colorectal screening crude prevalence is 
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+    Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated colorectal screening crude prevalence is 
     <b>${p["Colorectal cancer screening crude prevalence (%)"]}%</b> 
-    ${p["Colorectal cancer screening crude prevalence 95% CI"]}.
+    ${p["Colorectal cancer screening crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
   `;
 
     var annualCheckUpLayer = L.geoJson(feature, {
@@ -3073,38 +3102,43 @@ function addHealthStatusData(data) {
     var p = feature.properties;
 
     var depressionPopup = `
-    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated depression crude prevalence is 
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+    Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated depression crude prevalence is 
     <b>${p["Depression crude prevalence (%)"]}%</b> 
-    ${p["Depression crude prevalence 95% CI"]}.
+    ${p["Depression crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
   `;
 
     var mentalHealthBadPopup = `
-    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated frequent mental health distress crude prevalence is 
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+    Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated frequent mental health distress crude prevalence is 
     <b>${p["Frequent mental health distress crude prevalence (%)"]}%</b> 
-    ${p["Frequent mental health distress crude prevalence 95% CI"]}.
+    ${p["Frequent mental health distress crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
   `;
 
     var physicalHealthBadPopup = `
-    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated frequent physical health distress crude prevalence is 
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+    Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated frequent physical health distress crude prevalence is 
     <b>${p["Frequent physical health distress crude prevalence (%)"]}%</b> 
-    ${p["Frequent physical health distress crude prevalence 95% CI"]}.
+    ${p["Frequent physical health distress crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
   `;
 
     var poorSelfRatedHealthPopup = `
-    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated fair or poor health crude prevalence is 
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+    Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated fair or poor health crude prevalence is 
     <b>${p["Fair or poor health crude prevalence (%)"]}%</b> 
-    ${p["Fair or poor health crude prevalence 95% CI"]}.
+    ${p["Fair or poor health crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
   `;
 
     var disabilityPopup = `
-    <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-    Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated any disability crude prevalence is 
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+    Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated any disability crude prevalence is 
     <b>${p["Any disability crude prevalence (%)"]}%</b> 
-    ${p["Any disability crude prevalence 95% CI"]}.
+    ${p["Any disability crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
   `;
 
     var depressionLayer = L.geoJson(feature, {
@@ -3844,65 +3878,72 @@ function updateHealthStatusMap() {
       var popupContent;
       if (selectedDisability == healthStatusLayerNames.DISABILITY) {
         popupContent = `
-          <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-          Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated any disability crude prevalence is 
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+          Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated any disability crude prevalence is 
           <b>${p["Any disability crude prevalence (%)"]}%</b> 
-          ${p["Any disability crude prevalence 95% CI"]}.
+          ${p["Any disability crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
         `;
       } else if (
         selectedDisability == healthStatusLayerNames.HEARING_DISABILITY
       ) {
         popupContent = `
-          <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-          Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated hearing disability crude prevalence is 
+      <h3>${p["Census tract name"]}</h3>
+      <h5>(${p["Neighborhood name"]})</h5><br>
+          Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated hearing disability crude prevalence is 
           <b>${p["Hearing disability crude prevalence (%)"]}%</b> 
-          ${p["Hearing disability crude prevalence 95% CI"]}.
+          ${p["Hearing disability crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
         `;
       } else if (
         selectedDisability == healthStatusLayerNames.VISION_DISABILITY
       ) {
         popupContent = `
-          <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-          Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated vision disability crude prevalence is 
+          <h3>${p["Census tract name"]}</h3>
+          <h5>(${p["Neighborhood name"]})</h5><br>
+          Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated vision disability crude prevalence is 
           <b>${p["Vision disability crude prevalence (%)"]}%</b> 
-          ${p["Vision disability crude prevalence 95% CI"]}.
+          ${p["Vision disability crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
         `;
       } else if (
         selectedDisability == healthStatusLayerNames.COGNITIVE_DISABILITY
       ) {
         popupContent = `
-          <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-          Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated cognitive disability crude prevalence is 
+          <h3>${p["Census tract name"]}</h3>
+          <h5>(${p["Neighborhood name"]})</h5><br>
+          Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated cognitive disability crude prevalence is 
           <b>${p["Cognitive disability crude prevalence (%)"]}%</b> 
-          ${p["Cognitive disability crude prevalence 95% CI"]}.
+          ${p["Cognitive disability crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
         `;
       } else if (
         selectedDisability == healthStatusLayerNames.MOBILITY_DISABILITY
       ) {
         popupContent = `
-          <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-          Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated mobility disability crude prevalence is 
+          <h3>${p["Census tract name"]}</h3>
+          <h5>(${p["Neighborhood name"]})</h5><br>
+          Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated mobility disability crude prevalence is 
           <b>${p["Mobility disability crude prevalence (%)"]}%</b> 
-          ${p["Mobility disability crude prevalence 95% CI"]}.
+          ${p["Mobility disability crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
         `;
       } else if (
         selectedDisability == healthStatusLayerNames.SELF_CARE_DISABILITY
       ) {
         popupContent = `
-          <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-          Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated self-care disability crude prevalence is 
+          <h3>${p["Census tract name"]}</h3>
+          <h5>(${p["Neighborhood name"]})</h5><br>
+          Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated self-care disability crude prevalence is 
           <b>${p["Self-care disability crude prevalence (%)"]}%</b> 
-          ${p["Self-care disability crude prevalence 95% CI"]}.
+          ${p["Self-care disability crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
         `;
       } else if (
         selectedDisability ==
         healthStatusLayerNames.INDEPENDENT_LIVING_DISABILITY
       ) {
         popupContent = `
-          <h3>Census tract: ${p["Census tract FIPS"]}</h3><br>
-          Approximately <b>${p["Total population 2010"]}</b> people live in this census tract, and the estimated independent living disability crude prevalence is 
+          <h3>${p["Census tract name"]}</h3>
+          <h5>(${p["Neighborhood name"]})</h5><br>
+          Approximately <b>${parseInt(p["Total population 2010"]).toLocaleString("en-US")}</b> people live in this census tract, and the estimated independent living disability crude prevalence is 
           <b>${p["Independent living disability crude prevalence (%)"]}%</b> 
-          ${p["Independent living disability crude prevalence 95% CI"]}.
+          ${p["Independent living disability crude prevalence 95% CI"]}.<br><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>
         `;
       }
 
@@ -4100,7 +4141,7 @@ function getColorBasedOnLanguageLegend(language) {
     : language == "Chinese"
     ? "#963f92ff"
     : language == "French, Haitian Creole, or Cajun"
-    ? "#6b5b95"
+    ? "#51eba6ff"
     : language == "German or other West Germanic languages"
     ? "#91c1fdff"
     : language == "Korean"
@@ -4112,11 +4153,11 @@ function getColorBasedOnLanguageLegend(language) {
     : language == "Other Indo-European languages"
     ? "#3288bd"
     : language == "Russian, Polish, or other Slavic languages"
-    ? "#51eba6ff"
+    ? "#eb554dff"
     : language == "Spanish"
     ? "#41ab5d"
     : language == "Tagalog (incl. Filipino)"
-    ? "#eb554dff"
+    ? "#f8d791"
     : language == "Vietnamese"
     ? "#ccb8cbff"
     : "#606060";
@@ -5000,15 +5041,6 @@ function getColorForIndependentLivingDisability(percent) {
     ? healthStatusColors[7]
     : healthStatusColors[8];
 }
-
-
-// healthDataGeojson // geojson
-// "Census tract FIPS": "36085017600",
-
-// languageGeoJsonData // populations
-// Tract: 36061000100,
-// Geographic: "Census Tract 1",
-// ntaname: "The Battery-Governors Island-Ellis Island-Liberty Island",
 
 const populations = [
   {
