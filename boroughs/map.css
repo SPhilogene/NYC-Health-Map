@@ -137,6 +137,13 @@ footer p {
   text-decoration: underline;
 }
 
+h5 {
+	font-size: 0.8rem;
+}
+
+h3 {
+	font-size: 1.5rem;
+}
 /* ================================================================== MAP STYLING ================================================================== */
 /* ================================= MAP CONTAINERS ================================= */
 #map-layout {
@@ -167,10 +174,10 @@ footer p {
   width: 100%;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 320px) {
   #map-container {
     height: 700px;
-    width: 65vw;
+    width: auto;
   }
 }
 
@@ -309,12 +316,13 @@ details > p {
 .screeningRatesLegend,
 .healthStatusLegend {
   padding: 2px 2px;
-  font: 10px Arial, Helvetica, sans-serif;
+  font: 9px Arial, Helvetica, sans-serif;
   background: white;
   background: rgba(255, 255, 255, 0.5);
   line-height: 24px;
   color: #555;
   min-width: 125px;
+  max-width: 150px;
 }
 
 /* Legend heading styles */
