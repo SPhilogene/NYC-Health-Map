@@ -56,7 +56,7 @@ var zipCodeOverlay = L.geoJson(combineZipData(zipCodeBoundaries, zipCodeData), {
 },
   onEachFeature: function(feature, layer) {
     //ADD POP UP
-    layer.bindPopup('<h3> Zip code: ' + feature.properties.ZIPCODE + '<p>The estimated total population of people living in <strong>' + feature.properties.ZIPCODE + ' (' + feature.properties.Neighborhood + ') ' +
+    layer.bindPopup('<h3>Zip code: ' + feature.properties.ZIPCODE + '</h3> <p>The estimated total population of people living in <strong>' + feature.properties.ZIPCODE + ' (' + feature.properties.Neighborhood + ') ' +
                 '</strong> is <strong>' + parseInt(feature.properties["2022 Total Population"]).toLocaleString("en-US") + '</strong>.</p><p style="font-size: 9px;">Data is from the 2024 PLACES: Local Data for Better Health project</p>');
     layer.on('mouseover', function() {
         layer.setStyle({
